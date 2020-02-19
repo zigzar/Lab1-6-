@@ -14,7 +14,7 @@ string outputFile = "students.txt";
 string databaseFile = "db.txt"; // Технический файл с неотформатированными данными
 
 struct Student {
-	//string creationTime;
+	string creationTime;
 	int id;
 	int groupNumber;
 	int groupPosition;
@@ -63,7 +63,7 @@ Student readStudents() {
 	string line;
 	fin.open(databaseFile);
 	getline(fin, line);
-	//getline(fin, currentStudent.creationTime);
+	getline(fin, currentStudent.creationTime);
 	getline(fin, line);
 	currentStudent.id = stoi(line);
 	getline(fin, currentStudent.name);
@@ -132,13 +132,13 @@ string getCurrentDate() {
 
 	_time64(&long_time); // Получить время как 64-битный integer
 	_localtime64_s(&newtime, &long_time); // Конвертировать в структуру tm (локальное время)
-	strftime(buffer, 25, "%x %X" , &newtime); // Перевод в ACSII
+	strftime(buffer, 25, "%d.%m.%Y %X" , &newtime); // Перевод в ACSII
 	string time = buffer;
 	return time;
 }
 
 void inputStudent(Student& currentStudent) {
-	//currentStudent.creationTime = getCurrentDate();
+	currentStudent.creationTime = getCurrentDate();
 	currentStudent.id = rand();
 	cout << "Введите ФИО студента: "; cin.ignore(cin.rdbuf()->in_avail()); getline(cin, currentStudent.name);
 	system("CLS");
@@ -167,7 +167,7 @@ void inputStudent(Student& currentStudent) {
 }
 
 void outputAll(Student& currentStudent) { // Вывод информации о текущем студенте
-	//cout << "Время создания: " << currentStudent.creationTime << endl;
+	cout << "Время создания: " << currentStudent.creationTime << endl;
 	cout << "ID студента: " << currentStudent.id << endl;
 	cout << "ФИО студента: " << currentStudent.name << endl;
 	cout << "Пол студента: " << currentStudent.sex << endl;
@@ -208,7 +208,7 @@ void transaction() {
 	fout.open(outputFile, ofstream::app);
 	for (int i = 0; i < studentQuantity; i++)
 	{
-		//fout << "Время создания: " << database[i].creationTime << endl;
+		fout << "Время создания: " << database[i].creationTime << endl;
 		fout << "ID студента: " << database[i].id << endl;
 		fout << "ФИО студента: " << database[i].name << endl;
 		fout << "Пол студента: " << database[i].sex << endl;
@@ -228,7 +228,7 @@ void transaction() {
 	fout.open(databaseFile, ofstream::app);
 	for (int i = 0; i < studentQuantity; i++)
 	{
-		//fout << database[i].creationTime << endl;
+		fout << database[i].creationTime << endl;
 		fout << database[i].id << endl;
 		fout << database[i].name << endl;
 		fout << database[i].sex << endl;
