@@ -1,4 +1,4 @@
-﻿//TODO: чтение бд из файла (убрать ofstream::app), 
+﻿//TODO чтение даты
 #include <iostream>
 #include <Windows.h>
 #include <string>
@@ -10,14 +10,15 @@ using namespace std;
 
 HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
-string databaseFile = "students.txt";
+string outputFile = "students.txt";
+string databaseFile = "db.txt"; // Технический файл с неотформатированными данными
 
 struct Student {
-	string creationTime;
+	//string creationTime;
 	int id;
 	int groupNumber;
 	int groupPosition;
-	int studyForm;
+	string studyForm;
 	string name;
 	string sex;
 	string itExamMark;
@@ -27,7 +28,7 @@ struct Student {
 	string engPassMark;
 	string codePassMark;
 	string codeCourseMark;
-};
+};	 
 
 Student* database;
 int studentQuantity;
@@ -56,16 +57,48 @@ int main()
 	else menu();
 }
 
+Student readStudents() {
+	Student currentStudent;
+	ifstream fin;
+	string line;
+	fin.open(databaseFile);
+	getline(fin, line);
+	//getline(fin, currentStudent.creationTime);
+	getline(fin, line);
+	currentStudent.id = stoi(line);
+	getline(fin, currentStudent.name);
+	getline(fin, currentStudent.sex);
+	getline(fin, line);
+	currentStudent.groupNumber = stoi(line);
+	getline(fin, line);
+	currentStudent.groupPosition = stoi(line);
+	getline(fin, currentStudent.studyForm);
+	getline(fin, currentStudent.itExamMark);
+	getline(fin, currentStudent.aigExamMark);
+	getline(fin, currentStudent.mathanExamMark);
+	getline(fin, currentStudent.historyPassMark);
+	getline(fin, currentStudent.engPassMark);
+	getline(fin, currentStudent.codePassMark);
+	getline(fin, currentStudent.codeCourseMark);
+	fin.close();
+	return currentStudent;
+}
+
 void loadDatabase() {
 	string line;
 	ifstream fin;
 	fin.open(databaseFile);
 	getline(fin, line);
-	getline(fin, line);
+	fin.close();
 	try
 	{
 		studentQuantity = stoi(line);
 		database = new Student[studentQuantity];
+		for (int i = 0; i < studentQuantity; i++)
+		{
+			database[i] = readStudents();
+			outputAll(database[i]);
+		};
 	}
 	catch (const exception&)
 	{
@@ -75,7 +108,6 @@ void loadDatabase() {
 		cout << "\nСоздан новый файл базы данных!\n";
 		Sleep(2000);
 	}
-	fin.close();
 }
 
 void pushBack(const Student& value) { // Увеличить массив студентов и добавить добавить в него нового студента
@@ -85,7 +117,8 @@ void pushBack(const Student& value) { // Увеличить массив сту�
 	{
 		newArray[i] = database[i];
 	}
-	if (studentQuantity > 0) delete[] database;
+
+	delete[] database;
 
 	newArray[studentQuantity++] = value;
 	
@@ -105,28 +138,42 @@ string getCurrentDate() {
 }
 
 void inputStudent(Student& currentStudent) {
-	currentStudent.creationTime = getCurrentDate();
+	//currentStudent.creationTime = getCurrentDate();
 	currentStudent.id = rand();
-	cout << "Введите ФИО студента: "; getline(cin, currentStudent.name);
+	cout << "Введите ФИО студента: "; cin.ignore(cin.rdbuf()->in_avail()); getline(cin, currentStudent.name);
+	system("CLS");
 	cout << "Введите пол студента: "; cin >> currentStudent.sex;
+	system("CLS");
 	cout << "Введите номер группы студента: "; cin >> currentStudent.groupNumber;
+	system("CLS");
 	cout << "Введите место в группе студента: "; cin >> currentStudent.groupPosition;
+	system("CLS");
+	cout << "Выберите форму обучения: "; cin >> currentStudent.studyForm;
+	system("CLS");
 	cout << "Введите оценку за экзамен по Вв в ИТ: "; cin >> currentStudent.itExamMark;
+	system("CLS");
 	cout << "Введите оценку за экзамен по АиГу: "; cin >> currentStudent.aigExamMark;
+	system("CLS");
 	cout << "Введите оценку за экзамен по МатАнанализу: "; cin >> currentStudent.mathanExamMark;
+	system("CLS");
 	cout << "Введите оценку за дифзачет по истории: "; cin >> currentStudent.historyPassMark;
+	system("CLS");
 	cout << "Введите оценку за дифзачет по английскому: "; cin >> currentStudent.engPassMark;
+	system("CLS");
 	cout << "Введите оценку за дифзачет по программированию: "; cin >> currentStudent.codePassMark;
+	system("CLS");
 	cout << "Введите оценку за курсовую по программированию: "; cin >> currentStudent.codeCourseMark;
+	system("CLS");
 }
 
-void outputAll(Student& currentStudent) {
-	cout << "Время создания: " << currentStudent.creationTime << endl;
+void outputAll(Student& currentStudent) { // Вывод информации о текущем студенте
+	//cout << "Время создания: " << currentStudent.creationTime << endl;
 	cout << "ID студента: " << currentStudent.id << endl;
 	cout << "ФИО студента: " << currentStudent.name << endl;
 	cout << "Пол студента: " << currentStudent.sex << endl;
 	cout << "Номер группы студента: " << currentStudent.groupNumber << endl;
 	cout << "Место в группе студента: " << currentStudent.groupPosition << endl;
+	cout << "Форма обучения: " << currentStudent.groupPosition << endl;
 	cout << "Оценка за экзамен по Вв в ИТ: " << currentStudent.itExamMark << endl;
 	cout << "Оценка за экзамен по АиГу: " << currentStudent.aigExamMark << endl;
 	cout << "Оценка за экзамен по МатАнанализу: " << currentStudent.mathanExamMark << endl;
@@ -136,10 +183,13 @@ void outputAll(Student& currentStudent) {
 	cout << "Оценка за курсовую по программированию: " << currentStudent.codeCourseMark << endl;
 }
 
-void newFile() { // Создать новый файл базы данных с базовой разметкой
+void newFile() { // Создать новый файл базы данных с базовой разметкой и очистить файл структур
 	ofstream fout;
-	fout.open(databaseFile);
+	fout.open(outputFile);
 	fout << "Количество студентов в базе данных:\n" << studentQuantity << endl;
+	fout.close();
+	fout.open(databaseFile);
+	fout << studentQuantity << endl;
 	fout.close();
 }
 
@@ -155,15 +205,16 @@ void newStudent() {
 void transaction() {
 	newFile();
 	ofstream fout;
-	fout.open(databaseFile, ofstream::app);
+	fout.open(outputFile, ofstream::app);
 	for (int i = 0; i < studentQuantity; i++)
 	{
-		fout << "Время создания: " << database[i].creationTime << endl;
+		//fout << "Время создания: " << database[i].creationTime << endl;
 		fout << "ID студента: " << database[i].id << endl;
 		fout << "ФИО студента: " << database[i].name << endl;
 		fout << "Пол студента: " << database[i].sex << endl;
 		fout << "Номер группы студента: " << database[i].groupNumber << endl;
 		fout << "Место в группе студента: " << database[i].groupPosition << endl;
+		fout << "Форма обучения: " << database[i].studyForm << endl;
 		fout << "Оценка за экзамен по Вв в ИТ: " << database[i].itExamMark << endl;
 		fout << "Оценка за экзамен по АиГу: " << database[i].aigExamMark << endl;
 		fout << "Оценка за экзамен по МатАнанализу: " << database[i].mathanExamMark << endl;
@@ -173,9 +224,28 @@ void transaction() {
 		fout << "Оценка за курсовую по программированию: " << database[i].codeCourseMark << endl;
 		fout << "_______________________________________________" << endl;
 	}
-	cout << "Транзакция базы данных прошла успешно!";
-	Sleep(2000);
 	fout.close();
+	fout.open(databaseFile, ofstream::app);
+	for (int i = 0; i < studentQuantity; i++)
+	{
+		//fout << database[i].creationTime << endl;
+		fout << database[i].id << endl;
+		fout << database[i].name << endl;
+		fout << database[i].sex << endl;
+		fout << database[i].groupNumber << endl;
+		fout << database[i].groupPosition << endl;
+		fout << database[i].studyForm << endl;
+		fout << database[i].itExamMark << endl;
+		fout << database[i].aigExamMark << endl;
+		fout << database[i].mathanExamMark << endl;
+		fout << database[i].historyPassMark << endl;
+		fout << database[i].engPassMark << endl;
+		fout << database[i].codePassMark << endl;
+		fout << database[i].codeCourseMark << endl;
+	};
+	fout.close();
+	cout << "Транзакция базы данных прошла успешно!\n";
+	Sleep(1500);
 }
 // МЕНЮ
 // Отображает меню в консоли
