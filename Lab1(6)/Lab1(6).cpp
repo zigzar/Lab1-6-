@@ -57,51 +57,42 @@ int main()
 	else menu();
 }
 
-Student readStudents() {
-	Student currentStudent;
-	ifstream fin;
-	string line;
-	fin.open(databaseFile);
-	getline(fin, line);
-	getline(fin, currentStudent.creationTime);
-	getline(fin, line);
-	currentStudent.id = stoi(line);
-	getline(fin, currentStudent.name);
-	getline(fin, currentStudent.sex);
-	getline(fin, line);
-	currentStudent.groupNumber = stoi(line);
-	getline(fin, line);
-	currentStudent.groupPosition = stoi(line);
-	getline(fin, currentStudent.studyForm);
-	getline(fin, currentStudent.itExamMark);
-	getline(fin, currentStudent.aigExamMark);
-	getline(fin, currentStudent.mathanExamMark);
-	getline(fin, currentStudent.historyPassMark);
-	getline(fin, currentStudent.engPassMark);
-	getline(fin, currentStudent.codePassMark);
-	getline(fin, currentStudent.codeCourseMark);
-	fin.close();
-	return currentStudent;
-}
-
 void loadDatabase() {
 	string line;
 	ifstream fin;
 	fin.open(databaseFile);
 	getline(fin, line);
-	fin.close();
 	try
 	{
 		studentQuantity = stoi(line);
 		database = new Student[studentQuantity];
 		for (int i = 0; i < studentQuantity; i++)
 		{
-			database[i] = readStudents();
+			getline(fin, database[i].creationTime);
+			getline(fin, line);
+			database[i].id = stoi(line);
+			getline(fin, database[i].name);
+			getline(fin, database[i].sex);
+			getline(fin, line);
+			database[i].groupNumber = stoi(line);
+			getline(fin, line);
+			database[i].groupPosition = stoi(line);
+			getline(fin, database[i].studyForm);
+			getline(fin, database[i].itExamMark);
+			getline(fin, database[i].aigExamMark);
+			getline(fin, database[i].mathanExamMark);
+			getline(fin, database[i].historyPassMark);
+			getline(fin, database[i].engPassMark);
+			getline(fin, database[i].codePassMark);
+			getline(fin, database[i].codeCourseMark);
 			outputAll(database[i]);
 		};
+		fin.close();
+		system("pause");
 	}
 	catch (const exception&)
 	{
+		fin.close();
 		cout << "Ошибка чтения файла. Файл поврежден или изменен. Будет создан новый файл." << endl;
 		studentQuantity = 0;
 		newFile();
@@ -198,7 +189,7 @@ void newStudent() {
 	inputStudent(newStudent);
 	pushBack(newStudent);
 	outputAll(database[studentQuantity-1]);
-	system("pause");
+	//system("pause");
 	transaction();
 }
 
