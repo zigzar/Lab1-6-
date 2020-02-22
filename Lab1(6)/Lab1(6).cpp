@@ -45,6 +45,14 @@ void menuLocked();
 int ans();
 int ansLocked();
 
+
+int editMenu(int i);
+void chooseStudent();
+void editStudent(int id);
+int getIndex(int id);
+int editMenuAns(int i);
+string getValue();
+
 int main()	
 {
 	SetConsoleCP(1251);
@@ -158,7 +166,7 @@ void inputStudent(Student& currentStudent) {
 }
 
 void outputAll(Student& currentStudent) { // Вывод информации о текущем студенте
-	cout << "Время создания: " << currentStudent.creationTime << endl;
+	cout << "Время создания/изменения: " << currentStudent.creationTime << endl;
 	cout << "ID студента: " << currentStudent.id << endl;
 	cout << "ФИО студента: " << currentStudent.name << endl;
 	cout << "Пол студента: " << currentStudent.sex << endl;
@@ -199,7 +207,7 @@ void transaction() {
 	fout.open(outputFile, ofstream::app);
 	for (int i = 0; i < studentQuantity; i++)
 	{
-		fout << "Время создания: " << database[i].creationTime << endl;
+		fout << "Время создания/изменения: " << database[i].creationTime << endl;
 		fout << "ID студента: " << database[i].id << endl;
 		fout << "ФИО студента: " << database[i].name << endl;
 		fout << "Пол студента: " << database[i].sex << endl;
@@ -305,7 +313,7 @@ int ansLocked() {
 	while (true) {
 		system("cls");
 		choice = (choice + options) % options;
-		cout << "Вверх/w и " << "вниз/s для перемещения" << endl;
+		cout << "Вверх/w и вниз/s для перемещения" << endl;
 		cout << "Enter для выбора" << endl << endl;
 
 		if (choice == 0) cout << "-> Новый студент" << endl;
@@ -351,7 +359,6 @@ int ansLocked() {
 	return choice;
 }
 
-
 // Выбирает действие в зависимости от выбора пользователя
 void menu() {
 	int answer;
@@ -364,7 +371,7 @@ void menu() {
 			outputAll(database[0]);
 			break;
 		case 1:
-
+			chooseStudent();
 			break;
 		case 2:
 
@@ -413,4 +420,147 @@ void menuLocked() {
 			break;
 		}
 	} while (answer == -1);
+}
+
+void chooseStudent()
+{
+	int id;
+	system("cls");
+	cout << "Введите Id студента для редактирования: ";
+	cin >> id;
+	editStudent(id);
+}
+
+void editStudent(int id)
+{
+	int i = getIndex(id);
+	editMenu(i);
+}
+
+int getIndex(int id)
+{
+	for (int i = 0; i < studentQuantity; i++)
+	{
+		if (database[i].id == id) return i;
+	}
+}
+
+int editMenu(int i)
+{
+	int answer;
+	do {
+		answer = editMenuAns(i);
+		string value = getValue();
+		switch (answer)
+		{
+		case 0:
+			
+			break;
+		case 12:
+			return;
+			break;
+		}
+	} while (true);
+}
+
+int editMenuAns(int i)
+{
+	int choice = 0;
+	int options = 13;
+	int ch;
+	while (true) {
+		system("cls");
+		choice = (choice + options) % options;
+		cout << "Вверх/w и вниз/s для перемещения" << endl;
+		cout << "Enter для выбора" << endl << endl;
+
+		if (choice == 0) {
+			cout << "-> ФИО студента: " << database[i].name << endl;
+		}
+		else  cout << "   ФИО студента: " << database[i].name << endl;
+
+		if (choice == 1) {
+			cout << "-> Пол студента: " << database[i].sex << endl;
+		}
+		else  cout << "   Пол студента: " << database[i].sex << endl;
+
+		if (choice == 2) {
+			cout << "-> Номер группы студента: " << database[i].groupNumber << endl;
+		}
+		else  cout << "   Номер группы студента: " << database[i].groupNumber << endl;
+
+		if (choice == 3) {
+			cout << "-> Место в группе студента: " << database[i].groupPosition << endl;
+		}
+		else  cout << "   Место в группе студента: " << database[i].groupPosition << endl;
+
+		if (choice == 4) {
+			cout << "-> Форма обучения: " << database[i].studyForm << endl;
+		}
+		else  cout << "   Форма обучения: " << database[i].studyForm << endl;
+
+		if (choice == 5) {
+			cout << "-> Оценка за экзамен по Вв в ИТ: " << database[i].itExamMark << endl;
+		}
+		else  cout << "   Оценка за экзамен по Вв в ИТ: " << database[i].itExamMark << endl;
+
+		if (choice == 6) {
+			cout << "-> Оценка за экзамен по АиГу: " << database[i].aigExamMark << endl;
+		}
+		else  cout << "   Оценка за экзамен по АиГу: " << database[i].aigExamMark << endl;
+
+		if (choice == 7) {
+			cout << "-> Оценка за экзамен по МатАнанализу: " << database[i].mathanExamMark << endl;
+		}
+		else  cout << "   Оценка за экзамен по МатАнанализу: " << database[i].mathanExamMark << endl;
+
+		if (choice == 8) {
+			cout << "-> Оценка за дифзачет по истории: " << database[i].historyPassMark << endl;
+		}
+		else  cout << "   Оценка за дифзачет по истории: " << database[i].historyPassMark << endl;
+
+		if (choice == 9) {
+			cout << "-> Оценка за дифзачет по английскому: " << database[i].engPassMark << endl;
+		}
+		else  cout << "   Оценка за дифзачет по английскому: " << database[i].engPassMark << endl;
+
+		if (choice == 10) {
+			cout << "-> Оценка за дифзачет по программированию: " << database[i].codePassMark << endl;
+		}
+		else  cout << "   Оценка за дифзачет по программированию: " << database[i].codePassMark << endl;
+
+		if (choice == 11) {
+			cout << "-> Оценка за курсовую по программированию: " << database[i].codeCourseMark << endl;
+		}
+		else  cout << "   Оценка за курсовую по программированию: " << database[i].codeCourseMark << endl;
+
+		if (choice == 12) {
+			cout << "-> Выход" << endl;
+		}
+		else  cout << "   Выход" << endl;
+
+		ch = _getch();
+		if (ch == 224)
+		{
+			ch = _getch();
+			if (ch == 80) choice++;
+			if (ch == 72) choice--;
+		}
+		if (ch == 119) choice--;
+		if (ch == 115) choice++;
+		if (ch == 13) break;
+	}
+	system("cls");
+	return choice;
+}
+
+string getValue()
+{
+	string value;
+	system("cls");
+	cout << "Введите новое значение: ";
+	cin.ignore(cin.rdbuf()->in_avail());
+	cin >> value;
+	cin.ignore(cin.rdbuf()->in_avail());
+	return value;
 }
