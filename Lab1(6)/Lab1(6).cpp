@@ -1,5 +1,4 @@
-﻿//TODO чтение даты
-#include <iostream>
+﻿#include <iostream>
 #include <Windows.h>
 #include <string>
 #include <conio.h>
