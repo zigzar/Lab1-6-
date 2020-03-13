@@ -63,6 +63,9 @@ void outputTop();
 
 void outputBySex();
 
+void outputWithGrant();
+bool isGranted(Student& currentStudent);
+
 int main()	
 {
 	SetConsoleCP(1251);
@@ -422,7 +425,7 @@ void menu() {
 			outputBySex();
 			break;
 		case 6:
-
+			outputWithGrant();
 			break;
 		case 7:
 
@@ -698,4 +701,133 @@ void outputBySex()
 
 	cout << "В базе данных " << male << " мужчин и " << female << " женщин" << endl;
 	system("pause");
+}
+
+void outputWithGrant()
+{
+	cout << "Следующие студенты получат стипендию:" << endl;
+	for (int i = 0; i < studentQuantity; i++)
+	{
+		bool granted = isGranted(database[i]);
+		if (granted) cout << database[i].name << " (гр. " << database[i].groupNumber << ")" << endl;
+	}
+}
+
+bool isGranted(Student& currentStudent)
+{
+	if (currentStudent.studyForm == "очная" &&
+		currentStudent.itExamMark > 3 &&
+		currentStudent.aigExamMark > 3 &&
+		currentStudent.mathanExamMark > 3 &&
+		currentStudent.engPassMark > 3 &&
+		currentStudent.historyPassMark > 3 &&
+		currentStudent.codeCourseMark > 3 &&
+		currentStudent.codePassMark > 3) return true;
+	else return false;
+}
+
+int editMenu(int i)
+{
+	int answer;
+	Student& currentStudent = database[i];
+	string value;
+	do {
+		answer = editMenuAns(i);
+		if (answer != 12) value = getValue();
+		switch (answer)
+		{
+		case 0:
+			currentStudent.name = value;
+			break;
+		case 1:
+			currentStudent.sex = value;
+			break;
+		case 2:
+			currentStudent.groupNumber = stoi(value);
+			break;
+		case 3:
+			currentStudent.groupPosition = stoi(value);
+			break;
+		case 4:
+			currentStudent.studyForm = value;
+			break;
+		case 5:
+			currentStudent.itExamMark = stoi(value);
+			countMarkSum(currentStudent);
+			break;
+		case 6:
+			currentStudent.aigExamMark = stoi(value);
+			countMarkSum(currentStudent);
+			break;
+		case 7:
+			currentStudent.mathanExamMark = stoi(value);
+			countMarkSum(currentStudent);
+			break;
+		case 8:
+			currentStudent.historyPassMark = stoi(value);
+			countMarkSum(currentStudent);
+			break;
+		case 9:
+			currentStudent.engPassMark = stoi(value);
+			countMarkSum(currentStudent);
+			break;
+		case 10:
+			currentStudent.codePassMark = stoi(value);
+			countMarkSum(currentStudent);
+			break;
+		case 11:
+			currentStudent.codeCourseMark = stoi(value);
+			countMarkSum(currentStudent);
+			break;
+		case 12:
+			return 0;
+			break;
+		}
+	} while (true);
+}
+
+int notGrantedAns()
+{
+	int choice = 0;
+	int options = 13;
+	int ch;
+	while (true) {
+		system("cls");
+		choice = (choice + options) % options;
+		cout << "Вверх/w и вниз/s для перемещения" << endl;
+		cout << "Enter для выбора" << endl << endl;
+
+		if (choice == 0) {
+			cout << "-> Учатся только на «хор»" << endl;
+		}
+		else  cout << "   Учатся только на «хор»" << endl;
+
+		if (choice == 1) {
+			cout << "-> Учатся на «хор» и «отл»" << endl;
+		}
+		else  cout << "   Учатся на «хор» и «отл»" << endl;
+
+		if (choice == 2) {
+			cout << "-> Учатся только на «отл»" << endl;
+		}
+		else  cout << "   Учатся только на «отл»" << endl;
+
+		if (choice == 3) {
+			cout << "-> Выход" << endl;
+		}
+		else  cout << "   Выход" << endl;
+
+		ch = _getch();
+		if (ch == 224)
+		{
+			ch = _getch();
+			if (ch == 80) choice++;
+			if (ch == 72) choice--;
+		}
+		if (ch == 119) choice--;
+		if (ch == 115) choice++;
+		if (ch == 13) break;
+	}
+	system("cls");
+	return choice;
 }
