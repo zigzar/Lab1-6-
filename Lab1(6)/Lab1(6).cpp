@@ -75,12 +75,12 @@ void notGranted_4();
 void notGranted_4and5();
 void notGranted_5();
 
-//void outputByDay();
-//int outputByDayMenu();
-//int outputByDayAns();
-//void outputAnyTime();
-//void outputAM();
-//void outputPM();
+void outputByDay();
+int outputByDayMenu();
+int outputByDayAns();
+void outputAnyTime();
+void outputAM();
+void outputPM();
 
 void outputByPosition();
 
@@ -879,6 +879,101 @@ void notGranted_5() {
 		bool only5 = is5(database[i]);
 		if (!granted && only5) cout << database[i].name << " (гр. " << database[i].groupNumber << ")" << endl;
 	}
+}
+
+void outputByDay()
+{
+	string date;
+	cout << "Введите дату в формате дд.мм.гггг: ";
+	cin >> date;
+	//TODO: разбить даты на день, месяц и год
+	outputByDayMenu();
+}
+
+int outputByDayMenu()
+{
+	int answer;
+	string value;
+	do {
+		answer = outputByDayAns();
+		switch (answer)
+		{
+		case 0:
+			outputAnyTime();
+			system("pause");
+			break;
+		case 1:
+			outputAM();
+			system("pause");
+			break;
+		case 2:
+			outputPM();
+			system("pause");
+			break;
+		case 3:
+			return 0;
+			break;
+		}
+	} while (true);
+	return 0;
+}
+
+int outputByDayAns()
+{
+	int choice = 0;
+	int options = 4;
+	int ch;
+	while (true) {
+		system("cls");
+		choice = (choice + options) % options;
+		cout << "Вверх/w и вниз/s для перемещения" << endl;
+		cout << "Enter для выбора" << endl << endl;
+
+		if (choice == 0) {
+			cout << "-> Данные за весь день" << endl;
+		}
+		else  cout << "   Данные за весь день" << endl;
+
+		if (choice == 1) {
+			cout << "-> Данные до полудня" << endl;
+		}
+		else  cout << "   Данные до полудня" << endl;
+
+		if (choice == 2) {
+			cout << "-> Данные после полудня" << endl;
+		}
+		else  cout << "   Данные после полудня" << endl;
+
+		if (choice == 3) {
+			cout << "-> Выход" << endl;
+		}
+		else  cout << "   Выход" << endl;
+
+		ch = _getch();
+		if (ch == 224)
+		{
+			ch = _getch();
+			if (ch == 80) choice++;
+			if (ch == 72) choice--;
+		}
+		if (ch == 119) choice--;
+		if (ch == 115) choice++;
+		if (ch == 13) break;
+	}
+	system("cls");
+	return choice;
+}
+
+void outputAnyTime()
+{
+}
+
+void outputAM()
+{
+}
+
+void outputPM()
+{
 }
 
 void outputByPosition()
