@@ -58,7 +58,10 @@ string getValue();
 int getGroupNumber();
 void outputByGroup();
 
+bool comp(Student a, Student b); // Компаратор для функции sort()
 void outputTop();
+
+void outputBySex();
 
 int main()	
 {
@@ -416,7 +419,7 @@ void menu() {
 			outputTop();
 			break;
 		case 5:
-
+			outputBySex();
 			break;
 		case 6:
 
@@ -680,4 +683,19 @@ void outputTop()
 	}
 	system("pause");
 	delete[] topArray;
+}
+
+void outputBySex()
+{
+	int male;
+	int female;
+
+	for (int i = 0; i < studentQuantity; i++)
+	{
+		if (database[i].sex == "м") male++;
+		else female++;
+	}
+
+	cout << "В базе данных " << male << " мужчин и " << female << " женщин" << endl;
+	system("pause");
 }
