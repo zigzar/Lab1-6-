@@ -5,6 +5,7 @@
 #include <conio.h>
 #include <ctime>
 #include <fstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -57,6 +58,8 @@ string getValue();
 
 int getGroupNumber();
 void outputByGroup();
+
+void outputTop();
 
 int main()	
 {
@@ -411,7 +414,7 @@ void menu() {
 			outputByGroup();
 			break;
 		case 4:
-
+			outputTop();
 			break;
 		case 5:
 
@@ -654,4 +657,28 @@ void outputByGroup() {
 		if (database[i].groupNumber == groupNumber)	outputAllFields(database[i]);
 	}
 	system("pause");
+}
+
+bool comp(Student a, Student b) {
+	return a.markSum > b.markSum;
+}
+
+void outputTop()
+{
+	Student* topArray = new Student[studentQuantity];
+	int topQuantity = 10;	// Количество позиций в ТОПе
+	for (int i = 0; i < studentQuantity; i++)
+	{
+		topArray[i] = database[i];
+	}
+
+	sort(topArray, topArray + studentQuantity, comp);
+
+	for (int i = 0; i < studentQuantity; i++)
+	{
+		cout << i+1 << ": " << topArray[i].name << " (гр. " << topArray[i].groupNumber << ")" << endl;
+		if (i == studentQuantity - 1) break;	// Если студентов меньше, чем позиций в ТОПе, то закончить вывод
+	}
+	system("pause");
+	delete[] topArray;
 }
