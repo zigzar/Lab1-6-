@@ -75,6 +75,15 @@ void notGranted_4();
 void notGranted_4and5();
 void notGranted_5();
 
+//void outputByDay();
+//int outputByDayMenu();
+//int outputByDayAns();
+//void outputAnyTime();
+//void outputAM();
+//void outputPM();
+
+void outputByPosition();
+
 int main()	
 {
 	SetConsoleCP(1251);
@@ -443,7 +452,7 @@ void menu() {
 
 			break;
 		case 9:
-
+			outputByPosition();
 			break;
 		case 10:
 			exit(0);
@@ -870,4 +879,17 @@ void notGranted_5() {
 		bool only5 = is5(database[i]);
 		if (!granted && only5) cout << database[i].name << " (гр. " << database[i].groupNumber << ")" << endl;
 	}
+}
+
+void outputByPosition()
+{
+	int position;
+	cout << "Введите номер студента в списке: ";
+	cin >> position;
+
+	for (int i = 0; i < studentQuantity; i++)
+	{
+		if (database[i].groupPosition == position) cout << database[i].name << " (гр. " << database[i].groupNumber << ")" << endl;
+	}
+	system("pause");
 }
