@@ -66,6 +66,15 @@ void outputBySex();
 void outputWithGrant();
 bool isGranted(Student& currentStudent);
 
+int notGrantedMenu();
+int notGrantedAns();
+bool is4(Student& currentStudent);
+bool is4and5(Student& currentStudent);
+bool is5(Student& currentStudent);
+void notGranted_4();
+void notGranted_4and5();
+void notGranted_5();
+
 int main()	
 {
 	SetConsoleCP(1251);
@@ -428,7 +437,7 @@ void menu() {
 			outputWithGrant();
 			break;
 		case 7:
-
+			notGrantedMenu();
 			break;
 		case 8:
 
@@ -711,6 +720,7 @@ void outputWithGrant()
 		bool granted = isGranted(database[i]);
 		if (granted) cout << database[i].name << " (гр. " << database[i].groupNumber << ")" << endl;
 	}
+	system("pause");
 }
 
 bool isGranted(Student& currentStudent)
@@ -726,60 +736,27 @@ bool isGranted(Student& currentStudent)
 	else return false;
 }
 
-int editMenu(int i)
+int notGrantedMenu()
 {
 	int answer;
-	Student& currentStudent = database[i];
 	string value;
 	do {
-		answer = editMenuAns(i);
-		if (answer != 12) value = getValue();
+		answer = notGrantedAns();
 		switch (answer)
 		{
 		case 0:
-			currentStudent.name = value;
+			notGranted_4();
+			system("pause");
 			break;
 		case 1:
-			currentStudent.sex = value;
+			notGranted_4and5();
+			system("pause");
 			break;
 		case 2:
-			currentStudent.groupNumber = stoi(value);
+			notGranted_5();
+			system("pause");
 			break;
 		case 3:
-			currentStudent.groupPosition = stoi(value);
-			break;
-		case 4:
-			currentStudent.studyForm = value;
-			break;
-		case 5:
-			currentStudent.itExamMark = stoi(value);
-			countMarkSum(currentStudent);
-			break;
-		case 6:
-			currentStudent.aigExamMark = stoi(value);
-			countMarkSum(currentStudent);
-			break;
-		case 7:
-			currentStudent.mathanExamMark = stoi(value);
-			countMarkSum(currentStudent);
-			break;
-		case 8:
-			currentStudent.historyPassMark = stoi(value);
-			countMarkSum(currentStudent);
-			break;
-		case 9:
-			currentStudent.engPassMark = stoi(value);
-			countMarkSum(currentStudent);
-			break;
-		case 10:
-			currentStudent.codePassMark = stoi(value);
-			countMarkSum(currentStudent);
-			break;
-		case 11:
-			currentStudent.codeCourseMark = stoi(value);
-			countMarkSum(currentStudent);
-			break;
-		case 12:
 			return 0;
 			break;
 		}
@@ -789,7 +766,7 @@ int editMenu(int i)
 int notGrantedAns()
 {
 	int choice = 0;
-	int options = 13;
+	int options = 4;
 	int ch;
 	while (true) {
 		system("cls");
@@ -830,4 +807,67 @@ int notGrantedAns()
 	}
 	system("cls");
 	return choice;
+}
+
+bool is4(Student& currentStudent) {
+	if (currentStudent.itExamMark == 4 &&
+		currentStudent.aigExamMark == 4 &&
+		currentStudent.mathanExamMark == 4 &&
+		currentStudent.engPassMark == 4 &&
+		currentStudent.historyPassMark == 4 &&
+		currentStudent.codeCourseMark == 4 &&
+		currentStudent.codePassMark == 4) return true;
+	else return false;
+}
+
+bool is4and5(Student& currentStudent) {
+	if (currentStudent.itExamMark > 3 &&
+		currentStudent.aigExamMark > 3 &&
+		currentStudent.mathanExamMark > 3 &&
+		currentStudent.engPassMark > 3 &&
+		currentStudent.historyPassMark > 3 &&
+		currentStudent.codeCourseMark > 3 &&
+		currentStudent.codePassMark > 3) return true;
+	else return false;
+}
+
+bool is5(Student& currentStudent) {
+	if (currentStudent.itExamMark == 5 &&
+		currentStudent.aigExamMark == 5 &&
+		currentStudent.mathanExamMark == 5 &&
+		currentStudent.engPassMark == 5 &&
+		currentStudent.historyPassMark == 5 &&
+		currentStudent.codeCourseMark == 5 &&
+		currentStudent.codePassMark == 5) return true;
+	else return false;
+}
+
+void notGranted_4() {
+	cout << "Следующие студенты не получат стипендию, но учатся только на 4:" << endl;
+	for (int i = 0; i < studentQuantity; i++)
+	{
+		bool granted = isGranted(database[i]);
+		bool only4 = is4(database[i]);
+		if (!granted && only4) cout << database[i].name << " (гр. " << database[i].groupNumber << ")" << endl;
+	}
+}
+
+void notGranted_4and5() {
+	cout << "Следующие студенты не получат стипендию, но учатся на 4 и 5:" << endl;
+	for (int i = 0; i < studentQuantity; i++)
+	{
+		bool granted = isGranted(database[i]);
+		bool only4and5 = is4and5(database[i]);
+		if (!granted && only4and5) cout << database[i].name << " (гр. " << database[i].groupNumber << ")" << endl;
+	}
+}
+
+void notGranted_5() {
+	cout << "Следующие студенты не получат стипендию, но учатся только на 5:" << endl;
+	for (int i = 0; i < studentQuantity; i++)
+	{
+		bool granted = isGranted(database[i]);
+		bool only5 = is5(database[i]);
+		if (!granted && only5) cout << database[i].name << " (гр. " << database[i].groupNumber << ")" << endl;
+	}
 }
