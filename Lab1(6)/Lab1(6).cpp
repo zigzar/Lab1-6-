@@ -35,7 +35,7 @@ Student* database;
 int studentQuantity;
 
 void inputStudent(Student &currentStudent);
-void outputAll(Student& currentStudent);
+void outputAllFields(Student& currentStudent);
 int countMarkSum(Student& currentStudent);
 
 void newFile();
@@ -178,7 +178,7 @@ void inputStudent(Student& currentStudent) {
 	system("CLS");
 }
 
-void outputAll(Student& currentStudent) { // Вывод информации о текущем студенте
+void outputAllFields(Student& currentStudent) { // Вывод информации о текущем студенте
 	cout << "Время создания/изменения: " << currentStudent.creationTime << endl;
 	cout << "ID студента: " << currentStudent.id << endl;
 	cout << "ФИО студента: " << currentStudent.name << endl;
@@ -222,7 +222,7 @@ void newStudent() {
 	Student newStudent;
 	inputStudent(newStudent);
 	pushBack(newStudent);
-	outputAll(database[studentQuantity-1]);
+	outputAllFields(database[studentQuantity-1]);
 	//system("pause");
 	transaction();
 }
@@ -395,7 +395,7 @@ void menu() {
 		{
 		case 0:
 			newStudent();
-			outputAll(database[0]);
+			outputAllFields(database[0]);
 			break;
 		case 1:
 			chooseStudent();
@@ -403,7 +403,7 @@ void menu() {
 		case 2:
 			for (int i = 0; i < studentQuantity; i++)
 			{
-				outputAll(database[i]);
+				outputAllFields(database[i]);
 			}
 			system("pause");
 			break;
@@ -443,7 +443,7 @@ void menuLocked() {
 		{
 		case 0:
 			newStudent();
-			outputAll(database[0]);
+			outputAllFields(database[0]);
 			main();
 			break;
 		case 10:
@@ -651,7 +651,7 @@ void outputByGroup() {
 	int groupNumber = getGroupNumber();
 	for (int i = 0; i < studentQuantity; i++)
 	{
-		if (database[i].groupNumber == groupNumber)	outputAll(database[i]);
+		if (database[i].groupNumber == groupNumber)	outputAllFields(database[i]);
 	}
 	system("pause");
 }
