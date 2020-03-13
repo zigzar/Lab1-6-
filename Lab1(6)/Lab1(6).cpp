@@ -687,8 +687,8 @@ void outputTop()
 
 void outputBySex()
 {
-	int male;
-	int female;
+	int male = 0;
+	int female = 0;
 
 	for (int i = 0; i < studentQuantity; i++)
 	{
