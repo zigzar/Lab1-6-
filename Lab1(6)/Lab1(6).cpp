@@ -21,13 +21,14 @@ struct Student {
 	string studyForm;
 	string name;
 	string sex;
-	string itExamMark;
-	string aigExamMark;
-	string mathanExamMark;
-	string historyPassMark;
-	string engPassMark;
-	string codePassMark;
-	string codeCourseMark;
+	int itExamMark;
+	int aigExamMark;
+	int mathanExamMark;
+	int historyPassMark;
+	int engPassMark;
+	int codePassMark;
+	int codeCourseMark;
+	int markSum;
 };	 
 
 Student* database;
@@ -35,6 +36,7 @@ int studentQuantity;
 
 void inputStudent(Student &currentStudent);
 void outputAll(Student& currentStudent);
+int countMarkSum(Student& currentStudent);
 
 void newFile();
 void transaction();
@@ -44,6 +46,17 @@ void menu();
 void menuLocked();
 int ans();
 int ansLocked();
+
+
+int editMenu(int i);
+void chooseStudent();
+void editStudent(int id);
+int getIndex(int id);
+int editMenuAns(int i);
+string getValue();
+
+int getGroupNumber();
+void outputByGroup();
 
 int main()	
 {
@@ -60,10 +73,10 @@ int main()
 void loadDatabase() {
 	string line;
 	ifstream fin;
-	fin.open(databaseFile);
-	getline(fin, line);
 	try
 	{
+		fin.open(databaseFile);
+		getline(fin, line);
 		studentQuantity = stoi(line);
 		database = new Student[studentQuantity];
 		for (int i = 0; i < studentQuantity; i++)
@@ -78,17 +91,24 @@ void loadDatabase() {
 			getline(fin, line);
 			database[i].groupPosition = stoi(line);
 			getline(fin, database[i].studyForm);
-			getline(fin, database[i].itExamMark);
-			getline(fin, database[i].aigExamMark);
-			getline(fin, database[i].mathanExamMark);
-			getline(fin, database[i].historyPassMark);
-			getline(fin, database[i].engPassMark);
-			getline(fin, database[i].codePassMark);
-			getline(fin, database[i].codeCourseMark);
-			outputAll(database[i]);
+			getline(fin, line);
+			database[i].itExamMark = stoi(line);
+			getline(fin, line);
+			database[i].aigExamMark = stoi(line);
+			getline(fin, line);
+			database[i].mathanExamMark = stoi(line);
+			getline(fin, line);
+			database[i].historyPassMark = stoi(line);
+			getline(fin, line);
+			database[i].engPassMark = stoi(line);
+			getline(fin, line);
+			database[i].codePassMark = stoi(line);
+			getline(fin, line);
+			database[i].codeCourseMark = stoi(line);
+			getline(fin, line);
+			database[i].markSum = stoi(line);
 		};
 		fin.close();
-		system("pause");
 	}
 	catch (const exception&)
 	{
@@ -101,7 +121,7 @@ void loadDatabase() {
 	}
 }
 
-void pushBack(const Student& value) { // Увеличить массив студентов и добавить добавить в него нового студента
+void pushBack(const Student& value) { // Увеличить массив студентов и добавить в него нового студента
 	Student* newArray = new Student[studentQuantity+1];
 
 	for (int i = 0; i < studentQuantity; i++)
@@ -154,17 +174,18 @@ void inputStudent(Student& currentStudent) {
 	cout << "Введите оценку за дифзачет по программированию: "; cin >> currentStudent.codePassMark;
 	system("CLS");
 	cout << "Введите оценку за курсовую по программированию: "; cin >> currentStudent.codeCourseMark;
+	currentStudent.markSum = countMarkSum(currentStudent);
 	system("CLS");
 }
 
 void outputAll(Student& currentStudent) { // Вывод информации о текущем студенте
-	cout << "Время создания: " << currentStudent.creationTime << endl;
+	cout << "Время создания/изменения: " << currentStudent.creationTime << endl;
 	cout << "ID студента: " << currentStudent.id << endl;
 	cout << "ФИО студента: " << currentStudent.name << endl;
 	cout << "Пол студента: " << currentStudent.sex << endl;
 	cout << "Номер группы студента: " << currentStudent.groupNumber << endl;
 	cout << "Место в группе студента: " << currentStudent.groupPosition << endl;
-	cout << "Форма обучения: " << currentStudent.groupPosition << endl;
+	cout << "Форма обучения: " << currentStudent.studyForm << endl;
 	cout << "Оценка за экзамен по Вв в ИТ: " << currentStudent.itExamMark << endl;
 	cout << "Оценка за экзамен по АиГу: " << currentStudent.aigExamMark << endl;
 	cout << "Оценка за экзамен по МатАнанализу: " << currentStudent.mathanExamMark << endl;
@@ -172,6 +193,19 @@ void outputAll(Student& currentStudent) { // Вывод информации о 
 	cout << "Оценка за дифзачет по английскому: " << currentStudent.engPassMark << endl;
 	cout << "Оценка за дифзачет по программированию: " << currentStudent.codePassMark << endl;
 	cout << "Оценка за курсовую по программированию: " << currentStudent.codeCourseMark << endl;
+}
+
+int countMarkSum(Student& currentStudent)
+{
+	int sum = 0;
+	sum += currentStudent.itExamMark;
+	sum += currentStudent.aigExamMark;
+	sum += currentStudent.mathanExamMark;
+	sum += currentStudent.historyPassMark;
+	sum += currentStudent.engPassMark;
+	sum += currentStudent.codePassMark;
+	sum += currentStudent.codeCourseMark;
+	return sum;
 }
 
 void newFile() { // Создать новый файл базы данных с базовой разметкой и очистить файл структур
@@ -199,7 +233,7 @@ void transaction() {
 	fout.open(outputFile, ofstream::app);
 	for (int i = 0; i < studentQuantity; i++)
 	{
-		fout << "Время создания: " << database[i].creationTime << endl;
+		fout << "Время создания/изменения: " << database[i].creationTime << endl;
 		fout << "ID студента: " << database[i].id << endl;
 		fout << "ФИО студента: " << database[i].name << endl;
 		fout << "Пол студента: " << database[i].sex << endl;
@@ -233,6 +267,7 @@ void transaction() {
 		fout << database[i].engPassMark << endl;
 		fout << database[i].codePassMark << endl;
 		fout << database[i].codeCourseMark << endl;
+		fout << database[i].markSum << endl;
 	};
 	fout.close();
 	cout << "Транзакция базы данных прошла успешно!\n";
@@ -305,7 +340,7 @@ int ansLocked() {
 	while (true) {
 		system("cls");
 		choice = (choice + options) % options;
-		cout << "Вверх/w и " << "вниз/s для перемещения" << endl;
+		cout << "Вверх/w и вниз/s для перемещения" << endl;
 		cout << "Enter для выбора" << endl << endl;
 
 		if (choice == 0) cout << "-> Новый студент" << endl;
@@ -351,7 +386,6 @@ int ansLocked() {
 	return choice;
 }
 
-
 // Выбирает действие в зависимости от выбора пользователя
 void menu() {
 	int answer;
@@ -364,13 +398,17 @@ void menu() {
 			outputAll(database[0]);
 			break;
 		case 1:
-
+			chooseStudent();
 			break;
 		case 2:
-
+			for (int i = 0; i < studentQuantity; i++)
+			{
+				outputAll(database[i]);
+			}
+			system("pause");
 			break;
 		case 3:
-
+			outputByGroup();
 			break;
 		case 4:
 
@@ -394,11 +432,11 @@ void menu() {
 			exit(0);
 			break;
 		}
-	} while (answer == -1);
+	} while (true);
 }
 
 void menuLocked() {
-	int answer;
+	int answer = -1;
 	do {
 		answer = ansLocked();
 		switch (answer)
@@ -412,5 +450,208 @@ void menuLocked() {
 			exit(0);
 			break;
 		}
-	} while (answer == -1);
+	} while (answer != 0);
+}
+
+void chooseStudent()
+{
+	int id;
+	system("cls");
+	cout << "Введите Id студента для редактирования: ";
+	cin >> id;
+	editStudent(id);
+}
+
+void editStudent(int id)
+{
+	int i = getIndex(id);
+	editMenu(i);
+	transaction();
+}
+
+int getIndex(int id)
+{
+	for (int i = 0; i < studentQuantity; i++)
+	{
+		if (database[i].id == id) return i;
+	}
+}
+
+int editMenu(int i)
+{
+	int answer;
+	Student& currentStudent = database[i];
+	string value;
+	do {
+		answer = editMenuAns(i);
+		if (answer != 12) value = getValue();
+		switch (answer)
+		{
+		case 0:
+			currentStudent.name = value;
+			break;
+		case 1:
+			currentStudent.sex = value;
+			break;
+		case 2:
+			currentStudent.groupNumber = stoi(value);
+			break;
+		case 3:
+			currentStudent.groupPosition = stoi(value);
+			break;
+		case 4:
+			currentStudent.studyForm = value;
+			break;
+		case 5:
+			currentStudent.itExamMark = stoi(value);
+			countMarkSum(currentStudent);
+			break;
+		case 6:
+			currentStudent.aigExamMark = stoi(value);
+			countMarkSum(currentStudent);
+			break;
+		case 7:
+			currentStudent.mathanExamMark = stoi(value);
+			countMarkSum(currentStudent);
+			break;
+		case 8:
+			currentStudent.historyPassMark = stoi(value);
+			countMarkSum(currentStudent);
+			break;
+		case 9:
+			currentStudent.engPassMark = stoi(value);
+			countMarkSum(currentStudent);
+			break;
+		case 10:
+			currentStudent.codePassMark = stoi(value);
+			countMarkSum(currentStudent);
+			break;
+		case 11:
+			currentStudent.codeCourseMark = stoi(value);
+			countMarkSum(currentStudent);
+			break;
+		case 12:
+			return 0;
+			break;
+		}
+	} while (true);
+}
+
+int editMenuAns(int i)
+{
+	int choice = 0;
+	int options = 13;
+	int ch;
+	while (true) {
+		system("cls");
+		choice = (choice + options) % options;
+		cout << "Вверх/w и вниз/s для перемещения" << endl;
+		cout << "Enter для выбора" << endl << endl;
+
+		if (choice == 0) {
+			cout << "-> ФИО студента: " << database[i].name << endl;
+		}
+		else  cout << "   ФИО студента: " << database[i].name << endl;
+
+		if (choice == 1) {
+			cout << "-> Пол студента: " << database[i].sex << endl;
+		}
+		else  cout << "   Пол студента: " << database[i].sex << endl;
+
+		if (choice == 2) {
+			cout << "-> Номер группы студента: " << database[i].groupNumber << endl;
+		}
+		else  cout << "   Номер группы студента: " << database[i].groupNumber << endl;
+
+		if (choice == 3) {
+			cout << "-> Место в группе студента: " << database[i].groupPosition << endl;
+		}
+		else  cout << "   Место в группе студента: " << database[i].groupPosition << endl;
+
+		if (choice == 4) {
+			cout << "-> Форма обучения: " << database[i].studyForm << endl;
+		}
+		else  cout << "   Форма обучения: " << database[i].studyForm << endl;
+
+		if (choice == 5) {
+			cout << "-> Оценка за экзамен по Вв в ИТ: " << database[i].itExamMark << endl;
+		}
+		else  cout << "   Оценка за экзамен по Вв в ИТ: " << database[i].itExamMark << endl;
+
+		if (choice == 6) {
+			cout << "-> Оценка за экзамен по АиГу: " << database[i].aigExamMark << endl;
+		}
+		else  cout << "   Оценка за экзамен по АиГу: " << database[i].aigExamMark << endl;
+
+		if (choice == 7) {
+			cout << "-> Оценка за экзамен по МатАнанализу: " << database[i].mathanExamMark << endl;
+		}
+		else  cout << "   Оценка за экзамен по МатАнанализу: " << database[i].mathanExamMark << endl;
+
+		if (choice == 8) {
+			cout << "-> Оценка за дифзачет по истории: " << database[i].historyPassMark << endl;
+		}
+		else  cout << "   Оценка за дифзачет по истории: " << database[i].historyPassMark << endl;
+
+		if (choice == 9) {
+			cout << "-> Оценка за дифзачет по английскому: " << database[i].engPassMark << endl;
+		}
+		else  cout << "   Оценка за дифзачет по английскому: " << database[i].engPassMark << endl;
+
+		if (choice == 10) {
+			cout << "-> Оценка за дифзачет по программированию: " << database[i].codePassMark << endl;
+		}
+		else  cout << "   Оценка за дифзачет по программированию: " << database[i].codePassMark << endl;
+
+		if (choice == 11) {
+			cout << "-> Оценка за курсовую по программированию: " << database[i].codeCourseMark << endl;
+		}
+		else  cout << "   Оценка за курсовую по программированию: " << database[i].codeCourseMark << endl;
+
+		if (choice == 12) {
+			cout << "-> Выход" << endl;
+		}
+		else  cout << "   Выход" << endl;
+
+		ch = _getch();
+		if (ch == 224)
+		{
+			ch = _getch();
+			if (ch == 80) choice++;
+			if (ch == 72) choice--;
+		}
+		if (ch == 119) choice--;
+		if (ch == 115) choice++;
+		if (ch == 13) break;
+	}
+	system("cls");
+	return choice;
+}
+
+string getValue()
+{
+	string value;
+	system("cls");
+	cout << "Введите новое значение: ";
+	cin.ignore(cin.rdbuf()->in_avail());
+	cin >> value;
+	cin.ignore(cin.rdbuf()->in_avail());
+	return value;
+}
+
+int getGroupNumber() {
+	int number;
+	system("cls");
+	cout << "Введите номер группы студентов: ";
+	cin >> number;
+	return number;
+}
+
+void outputByGroup() {
+	int groupNumber = getGroupNumber();
+	for (int i = 0; i < studentQuantity; i++)
+	{
+		if (database[i].groupNumber == groupNumber)	outputAll(database[i]);
+	}
+	system("pause");
 }
