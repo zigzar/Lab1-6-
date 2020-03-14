@@ -886,7 +886,6 @@ void outputByDay()
 	string date;
 	cout << "Введите дату в формате дд.мм.гггг: ";
 	cin >> date;
-	//TODO: разбить даты на день, месяц и год
 	outputByDayMenu(date);
 }
 
