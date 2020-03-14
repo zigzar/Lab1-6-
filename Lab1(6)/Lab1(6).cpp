@@ -76,11 +76,11 @@ void notGranted_4and5();
 void notGranted_5();
 
 void outputByDay();
-int outputByDayMenu();
+int outputByDayMenu(string date);
 int outputByDayAns();
-void outputAnyTime();
-void outputAM();
-void outputPM();
+void outputAnyTime(string date);
+void outputAM(string date);
+void outputPM(string date);
 
 void outputByPosition();
 
@@ -449,7 +449,7 @@ void menu() {
 			notGrantedMenu();
 			break;
 		case 8:
-
+			outputByDay();
 			break;
 		case 9:
 			outputByPosition();
@@ -887,10 +887,10 @@ void outputByDay()
 	cout << "Введите дату в формате дд.мм.гггг: ";
 	cin >> date;
 	//TODO: разбить даты на день, месяц и год
-	outputByDayMenu();
+	outputByDayMenu(date);
 }
 
-int outputByDayMenu()
+int outputByDayMenu(string date)
 {
 	int answer;
 	string value;
@@ -899,15 +899,15 @@ int outputByDayMenu()
 		switch (answer)
 		{
 		case 0:
-			outputAnyTime();
+			outputAnyTime(date);
 			system("pause");
 			break;
 		case 1:
-			outputAM();
+			outputAM(date);
 			system("pause");
 			break;
 		case 2:
-			outputPM();
+			outputPM(date);
 			system("pause");
 			break;
 		case 3:
@@ -964,16 +964,38 @@ int outputByDayAns()
 	return choice;
 }
 
-void outputAnyTime()
+void outputAnyTime(string date)
 {
+	string dataDate;
+	for (int i = 0; i < studentQuantity; i++)
+	{
+		dataDate.assign(database[i].creationTime, 0, 10);
+		if (date == dataDate) outputAllFields(database[i]);
+	}
 }
 
-void outputAM()
+void outputAM(string date)
 {
+	string dataDate;
+	string dataHour;
+	for (int i = 0; i < studentQuantity; i++)
+	{
+		dataDate.assign(database[i].creationTime, 0, 10); // Записываем дату из времени создания
+		dataHour.assign(database[i].creationTime, 11, 13); // Записываем часы из времени создания
+		if (date == dataDate && stoi(dataHour) < 12) outputAllFields(database[i]);
+	}
 }
 
-void outputPM()
+void outputPM(string date)
 {
+	string dataDate;
+	string dataHour;
+	for (int i = 0; i < studentQuantity; i++)
+	{
+		dataDate.assign(database[i].creationTime, 0, 10); // Записываем дату из времени создания
+		dataHour.assign(database[i].creationTime, 11, 13); // Записываем часы из времени создания
+		if (date == dataDate && stoi(dataHour) >= 12) outputAllFields(database[i]);
+	}
 }
 
 void outputByPosition()
