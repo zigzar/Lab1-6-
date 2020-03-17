@@ -510,7 +510,11 @@ int editMenu(int i)
 	string value;
 	do {
 		answer = editMenuAns(i);
-		if (answer != 12) value = getValue();
+		if (answer != 16)
+		{
+			value = getValue();
+			currentStudent.creationTime = getCurrentDate();
+		}
 		switch (answer)
 		{
 		case 0:
