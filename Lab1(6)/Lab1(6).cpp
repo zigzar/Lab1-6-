@@ -503,7 +503,7 @@ void menuLocked() {
 			outputAllFields(database[0]);
 			main();
 			break;
-		case 10:
+		case 1:
 			exit(0);
 			break;
 		}
