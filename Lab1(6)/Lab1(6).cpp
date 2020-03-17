@@ -196,7 +196,7 @@ void inputStudent(Student& currentStudent) {
 	system("CLS");
 	cout << "Введите размер одежды студента: "; cin >> currentStudent.wearSize;
 	system("CLS");
-	cout << "Введите разряд по волейболу (0, если отсутствует): "; cin >> currentStudent.courseNumber;
+	cout << "Введите разряд по волейболу (0, если отсутствует): "; cin >> currentStudent.rank;
 	system("CLS");
 	cout << "Введите номер курса студента: "; cin >> currentStudent.courseNumber;
 	system("CLS");
@@ -228,6 +228,10 @@ void outputAllFields(Student& currentStudent) { // Вывод информаци
 	cout << "ID студента: " << currentStudent.id << endl;
 	cout << "ФИО студента: " << currentStudent.name << endl;
 	cout << "Пол студента: " << currentStudent.sex << endl;
+	cout << "Возраст студента: " << currentStudent.age << endl;
+	cout << "Размер одежды студента: " << currentStudent.wearSize << endl;
+	cout << "Разряд по волейболу (0, если отсутствует): " << currentStudent.rank << endl;
+	cout << "Номер курса студента: " << currentStudent.courseNumber << endl;
 	cout << "Номер группы студента: " << currentStudent.groupNumber << endl;
 	cout << "Место в группе студента: " << currentStudent.groupPosition << endl;
 	cout << "Форма обучения: " << currentStudent.studyForm << endl;
@@ -282,6 +286,10 @@ void transaction() {
 		fout << "ID студента: " << database[i].id << endl;
 		fout << "ФИО студента: " << database[i].name << endl;
 		fout << "Пол студента: " << database[i].sex << endl;
+		fout << "Возраст студента: " << database[i].age << endl;
+		fout << "Размер одежды студента: " << database[i].wearSize << endl;
+		fout << "Разряд по волейболу (0, если отсутствует): " << database[i].rank << endl;
+		fout << "Номер курса студента: " << database[i].courseNumber << endl;
 		fout << "Номер группы студента: " << database[i].groupNumber << endl;
 		fout << "Место в группе студента: " << database[i].groupPosition << endl;
 		fout << "Форма обучения: " << database[i].studyForm << endl;
@@ -302,6 +310,10 @@ void transaction() {
 		fout << database[i].id << endl;
 		fout << database[i].name << endl;
 		fout << database[i].sex << endl;
+		fout << database[i].age << endl;
+		fout << database[i].wearSize << endl;
+		fout << database[i].rank << endl;
+		fout << database[i].courseNumber << endl;
 		fout << database[i].groupNumber << endl;
 		fout << database[i].groupPosition << endl;
 		fout << database[i].studyForm << endl;
