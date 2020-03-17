@@ -16,15 +16,15 @@ string databaseFile = "db.txt"; // Технический файл с неотф
 struct Student {
 	string creationTime;
 	int id;
-	int groupNumber;
-	int groupPosition;
-	string studyForm;
-	int courseNumber;
 	string name;
 	string sex;
 	int age;
 	string wearSize;
 	int rank;
+	int courseNumber;
+	int groupNumber;
+	int groupPosition;
+	string studyForm;
 	int itExamMark;
 	int aigExamMark;
 	int mathanExamMark;
@@ -116,6 +116,13 @@ void loadDatabase() {
 			database[i].id = stoi(line);
 			getline(fin, database[i].name);
 			getline(fin, database[i].sex);
+			getline(fin, line);
+			database[i].age = stoi(line);
+			getline(fin, database[i].wearSize);
+			getline(fin, line);
+			database[i].rank = stoi(line);
+			getline(fin, line);
+			database[i].courseNumber = stoi(line);
 			getline(fin, line);
 			database[i].groupNumber = stoi(line);
 			getline(fin, line);
