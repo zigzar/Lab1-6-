@@ -508,7 +508,7 @@ void menu() {
 			outputByPosition();
 			break;
 		case 10:
-			//outputRanked();
+			outputRanked();
 			break;
 		case 11:
 			//outputFemaleTeam();
@@ -575,7 +575,11 @@ int editMenu(int i)
 	string value;
 	do {
 		answer = editMenuAns(i);
-		if (answer != 16) value = getValue();
+		if (answer != 16)
+		{
+			value = getValue();
+			currentStudent.creationTime = getCurrentDate();
+		}
 		switch (answer)
 		{
 		case 0:
@@ -1114,4 +1118,5 @@ void outputRanked()
 			outputAllFields(database[i]);
 		}
 	}
+	system("pause");
 }
