@@ -334,7 +334,7 @@ void transaction() {
 // Отображает меню в консоли
 int ans() {
 	int choice = 0;
-	int options = 11;
+	int options = 15;
 	int ch;
 	while (true) {
 		system("cls");
@@ -372,7 +372,19 @@ int ans() {
 		if (choice == 9) cout << "-> Вывод студентов с k-м номеров в списке" << endl;
 		else  cout << "   Вывод студентов с k-м номеров в списке" << endl;
 
-		if (choice == 10) cout << "-> Выход" << endl;
+		if (choice == 10) cout << "-> Вывод студентов с разрядом по волейболу" << endl;
+		else  cout << "   Вывод студентов с разрядом по волейболу" << endl;
+
+		if (choice == 11) cout << "-> Вывод студенток женской сборной по волейболу" << endl;
+		else  cout << "   Вывод студенток женской сборной по волейболу" << endl;
+
+		if (choice == 12) cout << "-> Вывод студентов k-го курса" << endl;
+		else  cout << "   Вывод студентов k-го курса" << endl;
+
+		if (choice == 13) cout << "-> Вывод студентов мужского пола, чей размер одежды больше, чем S" << endl;
+		else  cout << "   Вывод студентов мужского пола, чей размер одежды больше, чем S" << endl;
+
+		if (choice == 14) cout << "-> Выход" << endl;
 		else  cout << "   Выход" << endl;
 
 		ch = _getch();
@@ -422,6 +434,14 @@ int ansLocked() {
 		cout << "   Вывод студентов по времени" << endl;
 
 		cout << "   Вывод студентов с k-м номеров в списке" << endl;
+
+		cout << "   Вывод студентов с разрядом по волейболу" << endl;
+
+		cout << "   Вывод студенток женской сборной по волейболу" << endl;
+
+		cout << "   Вывод студентов k-го курса" << endl;
+		
+		cout << "   Вывод студентов мужского пола, чей размер одежды больше, чем S" << endl;
 
 		SetConsoleTextAttribute(h, (WORD)((0 << 4) | 15));
 
@@ -486,6 +506,18 @@ void menu() {
 			outputByPosition();
 			break;
 		case 10:
+			//outputRanked();
+			break;
+		case 11:
+			//outputFemaleTeam();
+			break;
+		case 12:
+			//outputByCourse();
+			break;
+		case 13:
+			//outputMaleS();
+			break;
+		case 14:
 			exit(0);
 			break;
 		}
