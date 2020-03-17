@@ -192,6 +192,14 @@ void inputStudent(Student& currentStudent) {
 	system("CLS");
 	cout << "Введите пол студента: "; cin >> currentStudent.sex;
 	system("CLS");
+	cout << "Введите возраст студента: "; cin >> currentStudent.age;
+	system("CLS");
+	cout << "Введите размер одежды студента: "; cin >> currentStudent.wearSize;
+	system("CLS");
+	cout << "Введите разряд по волейболу (0, если отсутствует): "; cin >> currentStudent.courseNumber;
+	system("CLS");
+	cout << "Введите номер курса студента: "; cin >> currentStudent.courseNumber;
+	system("CLS");
 	cout << "Введите номер группы студента: "; cin >> currentStudent.groupNumber;
 	system("CLS");
 	cout << "Введите место в группе студента: "; cin >> currentStudent.groupPosition;
