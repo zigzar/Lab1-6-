@@ -541,7 +541,7 @@ int editMenu(int i)
 	string value;
 	do {
 		answer = editMenuAns(i);
-		if (answer != 12) value = getValue();
+		if (answer != 16) value = getValue();
 		switch (answer)
 		{
 		case 0:
@@ -717,14 +717,13 @@ int editMenuAns(int i)
 	return choice;
 }
 
-string getValue()
+string getValue() // Получает значение для редактируемого поля структуры
 {
 	string value;
 	system("cls");
 	cout << "Введите новое значение: ";
-	cin.ignore(cin.rdbuf()->in_avail());
-	cin >> value;
-	cin.ignore(cin.rdbuf()->in_avail());
+	cin.ignore(cin.rdbuf()->in_avail()); // Игнор буфера потока ввода
+	getline(cin, value);
 	return value;
 }
 
