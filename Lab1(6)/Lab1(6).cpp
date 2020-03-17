@@ -92,6 +92,9 @@ void outputRanked();
 
 void outputFemaleTeam();
 
+int getCourseNumber();
+void outputByCourse();
+
 int main()	
 {
 	SetConsoleCP(1251);
@@ -516,7 +519,7 @@ void menu() {
 			outputFemaleTeam();
 			break;
 		case 12:
-			//outputByCourse();
+			outputByCourse();
 			break;
 		case 13:
 			//outputMaleS();
@@ -1130,6 +1133,23 @@ void outputFemaleTeam()
 		if (database[i].rank > 0 && database[i].sex == "ж") {
 			outputAllFields(database[i]);
 		}
+	}
+	system("pause");
+}
+
+int getCourseNumber() {
+	int number;
+	system("cls");
+	cout << "Введите номер курса студентов: ";
+	cin >> number;
+	return number;
+}
+
+void outputByCourse() {
+	int courseNumber = getCourseNumber();
+	for (int i = 0; i < studentQuantity; i++)
+	{
+		if (database[i].courseNumber == courseNumber)	outputAllFields(database[i]);
 	}
 	system("pause");
 }
