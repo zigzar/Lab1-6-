@@ -90,6 +90,8 @@ void outputByPosition();
 
 void outputRanked();
 
+void outputFemaleTeam();
+
 int main()	
 {
 	SetConsoleCP(1251);
@@ -511,7 +513,7 @@ void menu() {
 			outputRanked();
 			break;
 		case 11:
-			//outputFemaleTeam();
+			outputFemaleTeam();
 			break;
 		case 12:
 			//outputByCourse();
@@ -1115,6 +1117,17 @@ void outputRanked()
 	for (int i = 0; i < studentQuantity; i++)
 	{
 		if (database[i].rank > 0) {
+			outputAllFields(database[i]);
+		}
+	}
+	system("pause");
+}
+
+void outputFemaleTeam()
+{
+	for (int i = 0; i < studentQuantity; i++)
+	{
+		if (database[i].rank > 0 && database[i].sex == "ж") {
 			outputAllFields(database[i]);
 		}
 	}
