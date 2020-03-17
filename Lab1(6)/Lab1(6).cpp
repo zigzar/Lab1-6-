@@ -551,43 +551,55 @@ int editMenu(int i)
 			currentStudent.sex = value;
 			break;
 		case 2:
-			currentStudent.groupNumber = stoi(value);
+			currentStudent.age = stoi(value);
 			break;
 		case 3:
-			currentStudent.groupPosition = stoi(value);
+			currentStudent.wearSize = value;
 			break;
 		case 4:
-			currentStudent.studyForm = value;
+			currentStudent.rank = stoi(value);
 			break;
 		case 5:
+			currentStudent.courseNumber = stoi(value);
+			break;
+		case 6:
+			currentStudent.groupNumber = stoi(value);
+			break;
+		case 7:
+			currentStudent.groupPosition = stoi(value);
+			break;
+		case 8:
+			currentStudent.studyForm = value;
+			break;
+		case 9:
 			currentStudent.itExamMark = stoi(value);
 			countMarkSum(currentStudent);
 			break;
-		case 6:
+		case 10:
 			currentStudent.aigExamMark = stoi(value);
 			countMarkSum(currentStudent);
 			break;
-		case 7:
+		case 11:
 			currentStudent.mathanExamMark = stoi(value);
 			countMarkSum(currentStudent);
 			break;
-		case 8:
+		case 12:
 			currentStudent.historyPassMark = stoi(value);
 			countMarkSum(currentStudent);
 			break;
-		case 9:
+		case 13:
 			currentStudent.engPassMark = stoi(value);
 			countMarkSum(currentStudent);
 			break;
-		case 10:
+		case 14:
 			currentStudent.codePassMark = stoi(value);
 			countMarkSum(currentStudent);
 			break;
-		case 11:
+		case 15:
 			currentStudent.codeCourseMark = stoi(value);
 			countMarkSum(currentStudent);
 			break;
-		case 12:
+		case 16:
 			return 0;
 			break;
 		}
@@ -597,7 +609,7 @@ int editMenu(int i)
 int editMenuAns(int i)
 {
 	int choice = 0;
-	int options = 13;
+	int options = 17;
 	int ch;
 	while (true) {
 		system("cls");
@@ -616,56 +628,76 @@ int editMenuAns(int i)
 		else  cout << "   Пол студента: " << database[i].sex << endl;
 
 		if (choice == 2) {
+			cout << "-> Возраст студента: " << database[i].age << endl;
+		}
+		else  cout << "   Возраст студента: " << database[i].age << endl;
+
+		if (choice == 3) {
+			cout << "-> Размер одежды студента: " << database[i].wearSize << endl;
+		}
+		else  cout << "   Размер одежды студента: " << database[i].wearSize << endl;
+
+		if (choice == 4) {
+			cout << "-> Разряд по волейболу (0, если отсутствует): " << database[i].rank << endl;
+		}
+		else  cout << "   Разряд по волейболу (0, если отсутствует): " << database[i].rank << endl;
+
+		if (choice == 5) {
+			cout << "-> Номер курса студента: " << database[i].courseNumber << endl;
+		}
+		else  cout << "   Номер курса студента: " << database[i].courseNumber << endl;
+
+		if (choice == 6) {
 			cout << "-> Номер группы студента: " << database[i].groupNumber << endl;
 		}
 		else  cout << "   Номер группы студента: " << database[i].groupNumber << endl;
 
-		if (choice == 3) {
+		if (choice == 7) {
 			cout << "-> Место в группе студента: " << database[i].groupPosition << endl;
 		}
 		else  cout << "   Место в группе студента: " << database[i].groupPosition << endl;
 
-		if (choice == 4) {
+		if (choice == 8) {
 			cout << "-> Форма обучения: " << database[i].studyForm << endl;
 		}
 		else  cout << "   Форма обучения: " << database[i].studyForm << endl;
 
-		if (choice == 5) {
+		if (choice == 9) {
 			cout << "-> Оценка за экзамен по Вв в ИТ: " << database[i].itExamMark << endl;
 		}
 		else  cout << "   Оценка за экзамен по Вв в ИТ: " << database[i].itExamMark << endl;
 
-		if (choice == 6) {
+		if (choice == 10) {
 			cout << "-> Оценка за экзамен по АиГу: " << database[i].aigExamMark << endl;
 		}
 		else  cout << "   Оценка за экзамен по АиГу: " << database[i].aigExamMark << endl;
 
-		if (choice == 7) {
+		if (choice == 11) {
 			cout << "-> Оценка за экзамен по МатАнанализу: " << database[i].mathanExamMark << endl;
 		}
 		else  cout << "   Оценка за экзамен по МатАнанализу: " << database[i].mathanExamMark << endl;
 
-		if (choice == 8) {
+		if (choice == 12) {
 			cout << "-> Оценка за дифзачет по истории: " << database[i].historyPassMark << endl;
 		}
 		else  cout << "   Оценка за дифзачет по истории: " << database[i].historyPassMark << endl;
 
-		if (choice == 9) {
+		if (choice == 13) {
 			cout << "-> Оценка за дифзачет по английскому: " << database[i].engPassMark << endl;
 		}
 		else  cout << "   Оценка за дифзачет по английскому: " << database[i].engPassMark << endl;
 
-		if (choice == 10) {
+		if (choice == 14) {
 			cout << "-> Оценка за дифзачет по программированию: " << database[i].codePassMark << endl;
 		}
 		else  cout << "   Оценка за дифзачет по программированию: " << database[i].codePassMark << endl;
 
-		if (choice == 11) {
+		if (choice == 15) {
 			cout << "-> Оценка за курсовую по программированию: " << database[i].codeCourseMark << endl;
 		}
 		else  cout << "   Оценка за курсовую по программированию: " << database[i].codeCourseMark << endl;
 
-		if (choice == 12) {
+		if (choice == 16) {
 			cout << "-> Выход" << endl;
 		}
 		else  cout << "   Выход" << endl;
