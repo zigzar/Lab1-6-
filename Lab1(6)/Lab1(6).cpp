@@ -95,6 +95,8 @@ void outputFemaleTeam();
 int getCourseNumber();
 void outputByCourse();
 
+void outputMaleS();
+
 int main()	
 {
 	SetConsoleCP(1251);
@@ -522,7 +524,7 @@ void menu() {
 			outputByCourse();
 			break;
 		case 13:
-			//outputMaleS();
+			outputMaleS();
 			break;
 		case 14:
 			exit(0);
@@ -1150,6 +1152,17 @@ void outputByCourse() {
 	for (int i = 0; i < studentQuantity; i++)
 	{
 		if (database[i].courseNumber == courseNumber)	outputAllFields(database[i]);
+	}
+	system("pause");
+}
+
+void outputMaleS()
+{
+	for (int i = 0; i < studentQuantity; i++)
+	{
+		if (database[i].sex == "м" && (database[i].wearSize == "m" || database[i].wearSize == "l" || database[i].wearSize == "xl")) {
+			outputAllFields(database[i]);
+		}
 	}
 	system("pause");
 }
