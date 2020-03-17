@@ -88,6 +88,8 @@ void outputPM(string date);
 
 void outputByPosition();
 
+void outputRanked();
+
 int main()	
 {
 	SetConsoleCP(1251);
@@ -1102,4 +1104,14 @@ void outputByPosition()
 		if (database[i].groupPosition == position) cout << database[i].name << " (гр. " << database[i].groupNumber << ")" << endl;
 	}
 	system("pause");
+}
+
+void outputRanked()
+{
+	for (int i = 0; i < studentQuantity; i++)
+	{
+		if (database[i].rank > 0) {
+			outputAllFields(database[i]);
+		}
+	}
 }
