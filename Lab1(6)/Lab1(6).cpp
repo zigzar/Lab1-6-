@@ -19,8 +19,12 @@ struct Student {
 	int groupNumber;
 	int groupPosition;
 	string studyForm;
+	int courseNumber;
 	string name;
 	string sex;
+	int age;
+	string wearSize;
+	int rank;
 	int itExamMark;
 	int aigExamMark;
 	int mathanExamMark;
