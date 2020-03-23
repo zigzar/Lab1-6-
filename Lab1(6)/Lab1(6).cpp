@@ -300,7 +300,16 @@ void newFile() { // Создать новый файл базы данных с 
 
 void newStudent() {
 	Student newStudent;
-	inputStudent(newStudent);
+	try
+	{
+		inputStudent(newStudent);
+	}
+	catch (const exception&)
+	{
+		cout << "Ошибка! Неверный формат ввода. Пожалуйста, вводите числа, где это возможно." << endl;
+
+	}
+
 	if (!has2(newStudent)) {
 		pushBack(newStudent);
 		outputAllFields(database[studentQuantity - 1]);
