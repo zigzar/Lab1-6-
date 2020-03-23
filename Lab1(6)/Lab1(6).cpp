@@ -580,15 +580,45 @@ void menuLocked() {
 void chooseStudent()
 {
 	int id;
+	bool exist = false;
 	system("cls");
+
 	for (int i = 0; i < studentQuantity; i++)
 	{
 		cout << "ID: " << database[i].id << "\t" << database[i].name << " (гр. " << database[i].groupNumber << ")" << endl;
 	}
 	cout << endl;
 	cout << "Введите Id студента для редактирования (0 для выхода в меню): ";
-	cin >> id;
-	editStudent(id);
+
+	try
+	{
+		cin >> id;
+		if (id == 0) return;
+
+		for (int i = 0; i < studentQuantity; i++)
+		{
+			if (database[i].id == id)
+			{
+				exist = true;
+				break;
+			}
+		}
+
+		if (exist) editStudent(id);
+		else throw invalid_argument("Неверный ID");
+	}
+	catch (const exception&)
+	{
+		cerr << "Неверная запись ID. Пожалуйста, введите ID числом, используя арабские цифры" << endl;
+		Sleep(2000);
+		chooseStudent();
+	}
+	catch (const invalid_argument& e)
+	{
+		cerr << "Студента с таким ID не существует. Пожалуйста, введите корректный ID." << endl;
+		Sleep(2000);
+		chooseStudent();
+	}
 }
 
 void editStudent(int id)
