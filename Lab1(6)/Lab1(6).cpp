@@ -39,7 +39,9 @@ Student* database;
 int studentQuantity;
 
 void newStudent();
+void pushBack(const Student& value);
 void inputStudent(Student &currentStudent);
+string getCurrentDate();
 void outputAllFields(Student& currentStudent);
 bool has2(Student& currentStudent);
 int countMarkSum(Student& currentStudent);
