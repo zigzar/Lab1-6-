@@ -38,8 +38,10 @@ struct Student {
 Student* database;
 int studentQuantity;
 
+void newStudent();
 void inputStudent(Student &currentStudent);
 void outputAllFields(Student& currentStudent);
+bool has2(Student& currentStudent);
 int countMarkSum(Student& currentStudent);
 
 void newFile();
@@ -253,6 +255,24 @@ void outputAllFields(Student& currentStudent) { // Вывод информаци
 	cout << "Оценка за курсовую по программированию: " << currentStudent.codeCourseMark << endl;
 }
 
+bool has2(Student& currentStudent)
+{
+	if (currentStudent.itExamMark == 2 ||
+		currentStudent.aigExamMark == 2 ||
+		currentStudent.mathanExamMark == 2 ||
+		currentStudent.historyPassMark == 2 ||
+		currentStudent.engPassMark == 2 ||
+		currentStudent.codePassMark == 2 ||
+		currentStudent.codeCourseMark == 2)
+	{
+		return true;
+	}
+	else 
+	{
+		return false;
+	}
+}
+
 int countMarkSum(Student& currentStudent)
 {
 	int sum = 0;
@@ -279,10 +299,17 @@ void newFile() { // Создать новый файл базы данных с 
 void newStudent() {
 	Student newStudent;
 	inputStudent(newStudent);
-	pushBack(newStudent);
-	outputAllFields(database[studentQuantity-1]);
-	//system("pause");
-	transaction();
+	if (!has2(newStudent)) {
+		pushBack(newStudent);
+		outputAllFields(database[studentQuantity - 1]);
+		transaction();
+	}
+	else 
+	{
+		cout << "Внесение записи невозможно! Данный студент имеет 2 как минимум по одному предмету." << endl;
+		system("pause");
+	}
+
 }
 
 void transaction() {
@@ -481,7 +508,6 @@ void menu() {
 		{
 		case 0:
 			newStudent();
-			outputAllFields(database[0]);
 			break;
 		case 1:
 			chooseStudent();
