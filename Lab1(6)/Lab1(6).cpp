@@ -581,7 +581,12 @@ void chooseStudent()
 {
 	int id;
 	system("cls");
-	cout << "Введите Id студента для редактирования: ";
+	for (int i = 0; i < studentQuantity; i++)
+	{
+		cout << "ID: " << database[i].id << "\t" << database[i].name << " (гр. " << database[i].groupNumber << ")" << endl;
+	}
+	cout << endl;
+	cout << "Введите Id студента для редактирования (0 для выхода в меню): ";
 	cin >> id;
 	editStudent(id);
 }
