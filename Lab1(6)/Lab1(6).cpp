@@ -62,6 +62,7 @@ void editStudent(int id);
 int getIndex(int id);
 int editMenuAns(int i);
 string getValue();
+void deleteStudent(int index);
 
 int getGroupNumber();
 void outputByGroup();
@@ -618,15 +619,15 @@ void chooseStudent()
 		if (exist) editStudent(id);
 		else throw invalid_argument("Неверный ID");
 	}
-	catch (const exception&)
+	catch (const invalid_argument&)
 	{
-		cerr << "Неверная запись ID. Пожалуйста, введите ID числом, используя арабские цифры" << endl;
+		cerr << "Студента с таким ID не существует. Пожалуйста, введите корректный ID." << endl;
 		Sleep(2000);
 		chooseStudent();
 	}
-	catch (const invalid_argument& e)
+	catch (const exception&)
 	{
-		cerr << "Студента с таким ID не существует. Пожалуйста, введите корректный ID." << endl;
+		cerr << "Неверная запись ID. Пожалуйста, введите ID числом, используя арабские цифры" << endl;
 		Sleep(2000);
 		chooseStudent();
 	}
@@ -653,6 +654,11 @@ int editMenu(int i)
 	Student& currentStudent = database[i];
 	string value;
 	do {
+		if (has2(currentStudent))
+		{
+			deleteStudent(i);
+			return 0;
+		}
 		answer = editMenuAns(i);
 		if (answer != 16)
 		{
@@ -842,6 +848,29 @@ string getValue() // Получает значение для редактиру
 	cin.ignore(cin.rdbuf()->in_avail()); // Игнор буфера потока ввода
 	getline(cin, value);
 	return value;
+}
+
+void deleteStudent(int index)
+{
+	for (int i = index; i < studentQuantity-1; i++)
+	{
+		database[i] = database[i + 1];
+	}
+	studentQuantity--;
+
+	Student* newArray = new Student[studentQuantity];
+
+	for (int i = 0; i < studentQuantity; i++)
+	{
+		newArray[i] = database[i];
+	}
+
+	delete[] database;
+
+	database = newArray;
+
+	cout << "Внимание! Студент имеет неуд как минимум по одному предмету. Запись о нем будет удалена" << endl;
+	Sleep(2000);
 }
 
 int getGroupNumber() {
