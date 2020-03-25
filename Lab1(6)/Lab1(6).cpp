@@ -49,6 +49,8 @@ void markMenu(string message, int& mark);
 int markAns(string message);
 void sexMenu(bool& sex);
 int sexAns();
+void wearMenu(string& size);
+int wearAns();
 
 void newFile();
 void transaction();
@@ -212,7 +214,7 @@ void inputStudent(Student& currentStudent) {
 	system("CLS");
 	cout << "Введите возраст студента: "; cin >> currentStudent.age;
 	system("CLS");
-	cout << "Введите размер одежды студента: "; cin >> currentStudent.wearSize;
+	wearMenu(currentStudent.wearSize);
 	system("CLS");
 	cout << "Введите разряд по волейболу (0, если отсутствует): "; cin >> currentStudent.rank;
 	system("CLS");
@@ -317,7 +319,7 @@ void markMenu(string message, int& mark)
 int sexAns()
 {
 	int choice = 0;
-	int options = 4;
+	int options = 2;
 	int ch;
 	while (true) {
 		system("cls");
@@ -358,6 +360,72 @@ void sexMenu(bool& sex)
 		break;
 	case 1:
 		sex = 1;
+		break;
+	}
+}
+
+int wearAns()
+{
+	int choice = 0;
+	int options = 5;
+	int ch;
+	while (true) {
+		system("cls");
+		choice = (choice + options) % options;
+		cout << "Вверх/w и " << "вниз/s для перемещения" << endl;
+		cout << "Enter для выбора" << endl << endl;
+		cout << "Выберите размер одежды:" << endl;
+
+		if (choice == 0) cout << "-> XS" << endl;
+		else  cout << "   XS" << endl;
+
+		if (choice == 1) cout << "-> S" << endl;
+		else  cout << "   S" << endl;
+
+		if (choice == 2) cout << "-> M" << endl;
+		else  cout << "   M" << endl;
+
+		if (choice == 3) cout << "-> L" << endl;
+		else  cout << "   L" << endl;
+
+		if (choice == 4) cout << "-> XL" << endl;
+		else  cout << "   XL" << endl;
+
+		ch = _getch();
+		if (ch == 224)
+		{
+			ch = _getch();
+			if (ch == 80) choice++;
+			if (ch == 72) choice--;
+		}
+		if (ch == 119) choice--;
+		if (ch == 115) choice++;
+		if (ch == 13) break;
+	}
+	system("cls");
+	return choice;
+}
+
+void wearMenu(string& size)
+{
+	int answer;
+	answer = wearAns();
+	switch (answer)
+	{
+	case 0:
+		size = "XS";
+		break;
+	case 1:
+		size = "S";
+		break;
+	case 2:
+		size = "M";
+		break;
+	case 3:
+		size = "L";
+		break;
+	case 4:
+		size = "XL";
 		break;
 	}
 }
@@ -772,7 +840,7 @@ int editMenu(int i)
 			return 0;
 		}
 		answer = editMenuAns(i);
-		if (answer >= 0 && answer <= 8 && answer != 1)
+		if (answer >= 0 && answer <= 8 && answer != 1 && answer != 3)
 		{
 			value = getValue();
 			currentStudent.creationTime = getCurrentDate();
@@ -789,7 +857,7 @@ int editMenu(int i)
 			currentStudent.age = stoi(value);
 			break;
 		case 3:
-			currentStudent.wearSize = value;
+			wearMenu(currentStudent.wearSize);
 			break;
 		case 4:
 			currentStudent.rank = stoi(value);
@@ -1367,7 +1435,7 @@ void outputMaleS()
 {
 	for (int i = 0; i < studentQuantity; i++)
 	{
-		if (!database[i].sex && (database[i].wearSize == "m" || database[i].wearSize == "l" || database[i].wearSize == "xl")) {
+		if (!database[i].sex && (database[i].wearSize == "M" || database[i].wearSize == "L" || database[i].wearSize == "XL")) {
 			outputAllFields(database[i]);
 		}
 	}
