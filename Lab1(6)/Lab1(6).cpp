@@ -17,7 +17,7 @@ struct Student {
 	string creationTime;
 	int id;
 	string name;
-	string sex;
+	bool sex;
 	int age;
 	string wearSize;
 	int rank;
@@ -47,6 +47,8 @@ bool has2(Student& currentStudent);
 int countMarkSum(Student& currentStudent);
 void markMenu(string message, int& mark);
 int markAns(string message);
+void sexMenu(bool& sex);
+int sexAns();
 
 void newFile();
 void transaction();
@@ -130,7 +132,8 @@ void loadDatabase() {
 			getline(fin, line);
 			database[i].id = stoi(line);
 			getline(fin, database[i].name);
-			getline(fin, database[i].sex);
+			getline(fin, line);
+			database[i].sex = stoi(line);
 			getline(fin, line);
 			database[i].age = stoi(line);
 			getline(fin, database[i].wearSize);
@@ -205,7 +208,7 @@ void inputStudent(Student& currentStudent) {
 	currentStudent.id = rand();
 	cout << "Введите ФИО студента: "; cin.ignore(cin.rdbuf()->in_avail()); getline(cin, currentStudent.name);
 	system("CLS");
-	cout << "Введите пол студента: "; cin >> currentStudent.sex;
+	cout << "Введите пол студента: "; sexMenu(currentStudent.sex);
 	system("CLS");
 	cout << "Введите возраст студента: "; cin >> currentStudent.age;
 	system("CLS");
@@ -307,6 +310,54 @@ void markMenu(string message, int& mark)
 		break;
 	case 3:
 		mark = 2;
+		break;
+	}
+}
+
+int sexAns()
+{
+	int choice = 0;
+	int options = 4;
+	int ch;
+	while (true) {
+		system("cls");
+		choice = (choice + options) % options;
+		cout << "Вверх/w и " << "вниз/s для перемещения" << endl;
+		cout << "Enter для выбора" << endl << endl;
+		cout << "Выберите пол студента:" << endl;
+
+		if (choice == 0) cout << "-> Мужской" << endl;
+		else  cout << "   Мужской" << endl;
+		
+		if (choice == 1) cout << "-> Женский" << endl;
+		else  cout << "   Женский" << endl;
+
+		ch = _getch();
+		if (ch == 224)
+		{
+			ch = _getch();
+			if (ch == 80) choice++;
+			if (ch == 72) choice--;
+		}
+		if (ch == 119) choice--;
+		if (ch == 115) choice++;
+		if (ch == 13) break;
+	}
+	system("cls");
+	return choice;
+}
+
+void sexMenu(bool& sex)
+{
+	int answer;
+	answer = sexAns();
+	switch (answer)
+	{
+	case 0:
+		sex = 0;
+		break;
+	case 1:
+		sex = 1;
 		break;
 	}
 }
@@ -721,7 +772,7 @@ int editMenu(int i)
 			return 0;
 		}
 		answer = editMenuAns(i);
-		if (answer >= 0 && answer <= 8)
+		if (answer >= 0 && answer <= 8 && answer != 1)
 		{
 			value = getValue();
 			currentStudent.creationTime = getCurrentDate();
@@ -732,7 +783,7 @@ int editMenu(int i)
 			currentStudent.name = value;
 			break;
 		case 1:
-			currentStudent.sex = value;
+			sexMenu(currentStudent.sex);
 			break;
 		case 2:
 			currentStudent.age = stoi(value);
@@ -781,7 +832,6 @@ int editMenu(int i)
 			break;
 		}
 		if (answer >= 9 && answer <= 15) countMarkSum(currentStudent); // Если оценку изменили, то пересчитать сумму оценок
-
 	} while (true);
 }
 
@@ -977,8 +1027,8 @@ void outputBySex()
 
 	for (int i = 0; i < studentQuantity; i++)
 	{
-		if (database[i].sex == "м") male++;
-		else female++;
+		if (database[i].sex) female++;
+		else male++;
 	}
 
 	cout << "В базе данных " << male << " мужчин и " << female << " женщин" << endl;
@@ -1289,7 +1339,7 @@ void outputFemaleTeam()
 {
 	for (int i = 0; i < studentQuantity; i++)
 	{
-		if (database[i].rank > 0 && database[i].sex == "ж") {
+		if (database[i].rank > 0 && database[i].sex) {
 			outputAllFields(database[i]);
 		}
 	}
@@ -1317,7 +1367,7 @@ void outputMaleS()
 {
 	for (int i = 0; i < studentQuantity; i++)
 	{
-		if (database[i].sex == "м" && (database[i].wearSize == "m" || database[i].wearSize == "l" || database[i].wearSize == "xl")) {
+		if (!database[i].sex && (database[i].wearSize == "m" || database[i].wearSize == "l" || database[i].wearSize == "xl")) {
 			outputAllFields(database[i]);
 		}
 	}
