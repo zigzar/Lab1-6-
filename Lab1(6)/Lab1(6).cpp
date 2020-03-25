@@ -603,7 +603,7 @@ void transaction() {
 		fout << "Время создания/изменения: " << database[i].creationTime << endl;
 		fout << "ID студента: " << database[i].id << endl;
 		fout << "ФИО студента: " << database[i].name << endl;
-		fout << "Пол студента: " << database[i].sex << endl;
+		fout << "Пол студента: " << formatSex(database[i].sex) << endl;
 		fout << "Возраст студента: " << database[i].age << endl;
 		fout << "Размер одежды студента: " << database[i].wearSize << endl;
 		fout << "Разряд по волейболу (0, если отсутствует): " << database[i].rank << endl;
@@ -611,13 +611,13 @@ void transaction() {
 		fout << "Номер группы студента: " << database[i].groupNumber << endl;
 		fout << "Место в группе студента: " << database[i].groupPosition << endl;
 		fout << "Форма обучения: " << database[i].studyForm << endl;
-		fout << "Оценка за экзамен по Вв в ИТ: " << database[i].itExamMark << endl;
-		fout << "Оценка за экзамен по АиГу: " << database[i].aigExamMark << endl;
-		fout << "Оценка за экзамен по МатАнанализу: " << database[i].mathanExamMark << endl;
-		fout << "Оценка за дифзачет по истории: " << database[i].historyPassMark << endl;
-		fout << "Оценка за дифзачет по английскому: " << database[i].engPassMark << endl;
-		fout << "Оценка за дифзачет по программированию: " << database[i].codePassMark << endl;
-		fout << "Оценка за курсовую по программированию: " << database[i].codeCourseMark << endl;
+		fout << "Оценка за экзамен по Вв в ИТ: " << formatMark(database[i].itExamMark) << endl;
+		fout << "Оценка за экзамен по АиГу: " << formatMark(database[i].aigExamMark) << endl;
+		fout << "Оценка за экзамен по МатАнанализу: " << formatMark(database[i].mathanExamMark) << endl;
+		fout << "Оценка за дифзачет по истории: " << formatMark(database[i].historyPassMark) << endl;
+		fout << "Оценка за дифзачет по английскому: " << formatMark(database[i].engPassMark) << endl;
+		fout << "Оценка за дифзачет по программированию: " << formatMark(database[i].codePassMark) << endl;
+		fout << "Оценка за курсовую по программированию: " << formatMark(database[i].codeCourseMark) << endl;
 		fout << "_______________________________________________" << endl;
 	}
 	fout.close();
