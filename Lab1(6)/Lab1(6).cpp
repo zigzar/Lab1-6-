@@ -51,6 +51,8 @@ void sexMenu(bool& sex);
 int sexAns();
 void wearMenu(string& size);
 int wearAns();
+void formMenu(string& size);
+int formAns();
 
 void newFile();
 void transaction();
@@ -224,7 +226,7 @@ void inputStudent(Student& currentStudent) {
 	system("CLS");
 	cout << "Введите место в группе студента: "; cin >> currentStudent.groupPosition;
 	system("CLS");
-	cout << "Выберите форму обучения: "; cin >> currentStudent.studyForm;
+	formMenu(currentStudent.studyForm);
 	system("CLS");
 	markMenu("Введите оценку за экзамен по Вв в ИТ: ", currentStudent.itExamMark);
 	system("CLS");
@@ -426,6 +428,60 @@ void wearMenu(string& size)
 		break;
 	case 4:
 		size = "XL";
+		break;
+	}
+}
+
+int formAns()
+{
+	int choice = 0;
+	int options = 5;
+	int ch;
+	while (true) {
+		system("cls");
+		choice = (choice + options) % options;
+		cout << "Вверх/w и " << "вниз/s для перемещения" << endl;
+		cout << "Enter для выбора" << endl << endl;
+		cout << "Выберите форму обучения:" << endl;
+
+		if (choice == 0) cout << "-> очная" << endl;
+		else  cout << "   очная" << endl;
+
+		if (choice == 1) cout << "-> очно-заочная" << endl;
+		else  cout << "   очно-заочная" << endl;
+
+		if (choice == 2) cout << "-> заочная" << endl;
+		else  cout << "   заочная" << endl;
+
+		ch = _getch();
+		if (ch == 224)
+		{
+			ch = _getch();
+			if (ch == 80) choice++;
+			if (ch == 72) choice--;
+		}
+		if (ch == 119) choice--;
+		if (ch == 115) choice++;
+		if (ch == 13) break;
+	}
+	system("cls");
+	return choice;
+}
+
+void formMenu(string& size)
+{
+	int answer;
+	answer = formAns();
+	switch (answer)
+	{
+	case 0:
+		size = "очная";
+		break;
+	case 1:
+		size = "очно-заочная";
+		break;
+	case 2:
+		size = "заочная";
 		break;
 	}
 }
@@ -840,7 +896,7 @@ int editMenu(int i)
 			return 0;
 		}
 		answer = editMenuAns(i);
-		if (answer >= 0 && answer <= 8 && answer != 1 && answer != 3)
+		if (answer >= 0 && answer <= 7 && answer != 1 && answer != 3)
 		{
 			value = getValue();
 			currentStudent.creationTime = getCurrentDate();
@@ -872,7 +928,7 @@ int editMenu(int i)
 			currentStudent.groupPosition = stoi(value);
 			break;
 		case 8:
-			currentStudent.studyForm = value;
+			formMenu(currentStudent.studyForm);
 			break;
 		case 9:
 			markMenu("Введите оценку за экзамен по Вв в ИТ: ", currentStudent.itExamMark);
