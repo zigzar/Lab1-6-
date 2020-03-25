@@ -1137,7 +1137,9 @@ void outputTop()
 
 	for (int i = 0; i < studentQuantity; i++)
 	{
-		cout << i+1 << ": " << topArray[i].name << " (гр. " << topArray[i].groupNumber << ")" << endl;
+		cout << i+1 << ": " << topArray[i].name << " (гр. " << topArray[i].groupNumber << ")\t" 
+		<< round(double(topArray[i].markSum) * 100 / 7) / 100 << endl; // Вывести краткую информацию о студенте и его средний балл
+
 		if (i == studentQuantity - 1) break;	// Если студентов меньше, чем позиций в ТОПе, то закончить вывод
 	}
 	system("pause");
