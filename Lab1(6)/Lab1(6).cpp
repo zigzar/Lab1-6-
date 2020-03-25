@@ -43,6 +43,8 @@ void pushBack(const Student& value);
 void inputStudent(Student &currentStudent);
 string getCurrentDate();
 void outputAllFields(Student& currentStudent);
+string formatSex(bool& sex);
+string formatMark(int& mark);
 bool has2(Student& currentStudent);
 int countMarkSum(Student& currentStudent);
 void markMenu(string message, int& mark);
@@ -249,7 +251,7 @@ void outputAllFields(Student& currentStudent) { // Вывод информаци
 	cout << "Время создания/изменения: " << currentStudent.creationTime << endl;
 	cout << "ID студента: " << currentStudent.id << endl;
 	cout << "ФИО студента: " << currentStudent.name << endl;
-	cout << "Пол студента: " << currentStudent.sex << endl;
+	cout << "Пол студента: " << formatSex(currentStudent.sex) << endl;
 	cout << "Возраст студента: " << currentStudent.age << endl;
 	cout << "Размер одежды студента: " << currentStudent.wearSize << endl;
 	cout << "Разряд по волейболу (0, если отсутствует): " << currentStudent.rank << endl;
@@ -257,13 +259,45 @@ void outputAllFields(Student& currentStudent) { // Вывод информаци
 	cout << "Номер группы студента: " << currentStudent.groupNumber << endl;
 	cout << "Место в группе студента: " << currentStudent.groupPosition << endl;
 	cout << "Форма обучения: " << currentStudent.studyForm << endl;
-	cout << "Оценка за экзамен по Вв в ИТ: " << currentStudent.itExamMark << endl;
-	cout << "Оценка за экзамен по АиГу: " << currentStudent.aigExamMark << endl;
-	cout << "Оценка за экзамен по МатАнанализу: " << currentStudent.mathanExamMark << endl;
-	cout << "Оценка за дифзачет по истории: " << currentStudent.historyPassMark << endl;
-	cout << "Оценка за дифзачет по английскому: " << currentStudent.engPassMark << endl;
-	cout << "Оценка за дифзачет по программированию: " << currentStudent.codePassMark << endl;
-	cout << "Оценка за курсовую по программированию: " << currentStudent.codeCourseMark << endl;
+	cout << "Оценка за экзамен по Вв в ИТ: " << formatMark(currentStudent.itExamMark) << endl;
+	cout << "Оценка за экзамен по АиГу: " << formatMark(currentStudent.aigExamMark) << endl;
+	cout << "Оценка за экзамен по МатАнанализу: " << formatMark(currentStudent.mathanExamMark) << endl;
+	cout << "Оценка за дифзачет по истории: " << formatMark(currentStudent.historyPassMark) << endl;
+	cout << "Оценка за дифзачет по английскому: " << formatMark(currentStudent.engPassMark) << endl;
+	cout << "Оценка за дифзачет по программированию: " << formatMark(currentStudent.codePassMark) << endl;
+	cout << "Оценка за курсовую по программированию: " << formatMark(currentStudent.codeCourseMark) << endl;
+}
+
+string formatSex(bool& sex)
+{
+	switch (sex)
+	{
+	case false:
+		return "мужской";
+		break;
+	case true:
+		return "женский";
+		break;
+	}
+}
+
+string formatMark(int& mark)
+{
+	switch (mark)
+	{
+	case 2:
+		return "Неуд";
+		break;
+	case 3:
+		return "Уд";
+		break;
+	case 4:
+		return "Хор";
+		break;
+	case 5:
+		return "Отл";
+		break;
+	}
 }
 
 bool has2(Student& currentStudent)
