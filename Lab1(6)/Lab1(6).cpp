@@ -721,7 +721,7 @@ int editMenu(int i)
 			return 0;
 		}
 		answer = editMenuAns(i);
-		if (answer != 16)
+		if (answer >= 0 && answer <= 8)
 		{
 			value = getValue();
 			currentStudent.creationTime = getCurrentDate();
@@ -756,31 +756,31 @@ int editMenu(int i)
 			currentStudent.studyForm = value;
 			break;
 		case 9:
-			currentStudent.itExamMark = stoi(value);
+			markMenu("Введите оценку за экзамен по Вв в ИТ: ", currentStudent.itExamMark);
 			countMarkSum(currentStudent);
 			break;
 		case 10:
-			currentStudent.aigExamMark = stoi(value);
+			markMenu("Введите оценку за экзамен по АиГу: ", currentStudent.aigExamMark);
 			countMarkSum(currentStudent);
 			break;
 		case 11:
-			currentStudent.mathanExamMark = stoi(value);
+			markMenu("Введите оценку за экзамен по МатАнанализу: ", currentStudent.mathanExamMark);
 			countMarkSum(currentStudent);
 			break;
 		case 12:
-			currentStudent.historyPassMark = stoi(value);
+			markMenu("Введите оценку за дифзачет по истории: ", currentStudent.historyPassMark);
 			countMarkSum(currentStudent);
 			break;
 		case 13:
-			currentStudent.engPassMark = stoi(value);
+			markMenu("Введите оценку за дифзачет по английскому: ", currentStudent.engPassMark);
 			countMarkSum(currentStudent);
 			break;
 		case 14:
-			currentStudent.codePassMark = stoi(value);
+			markMenu("Введите оценку за дифзачет по программированию: ", currentStudent.codePassMark);
 			countMarkSum(currentStudent);
 			break;
 		case 15:
-			currentStudent.codeCourseMark = stoi(value);
+			markMenu("Введите оценку за курсовую по программированию: ", currentStudent.codeCourseMark);
 			countMarkSum(currentStudent);
 			break;
 		case 16:
