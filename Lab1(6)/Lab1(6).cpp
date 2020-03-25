@@ -17,7 +17,7 @@ struct Student {
 	string creationTime;
 	int id;
 	string name;
-	string sex;
+	bool sex;
 	int age;
 	string wearSize;
 	int rank;
@@ -47,6 +47,12 @@ bool has2(Student& currentStudent);
 int countMarkSum(Student& currentStudent);
 void markMenu(string message, int& mark);
 int markAns(string message);
+void sexMenu(bool& sex);
+int sexAns();
+void wearMenu(string& size);
+int wearAns();
+void formMenu(string& size);
+int formAns();
 
 void newFile();
 void transaction();
@@ -130,7 +136,8 @@ void loadDatabase() {
 			getline(fin, line);
 			database[i].id = stoi(line);
 			getline(fin, database[i].name);
-			getline(fin, database[i].sex);
+			getline(fin, line);
+			database[i].sex = stoi(line);
 			getline(fin, line);
 			database[i].age = stoi(line);
 			getline(fin, database[i].wearSize);
@@ -205,11 +212,11 @@ void inputStudent(Student& currentStudent) {
 	currentStudent.id = rand();
 	cout << "Введите ФИО студента: "; cin.ignore(cin.rdbuf()->in_avail()); getline(cin, currentStudent.name);
 	system("CLS");
-	cout << "Введите пол студента: "; cin >> currentStudent.sex;
+	cout << "Введите пол студента: "; sexMenu(currentStudent.sex);
 	system("CLS");
 	cout << "Введите возраст студента: "; cin >> currentStudent.age;
 	system("CLS");
-	cout << "Введите размер одежды студента: "; cin >> currentStudent.wearSize;
+	wearMenu(currentStudent.wearSize);
 	system("CLS");
 	cout << "Введите разряд по волейболу (0, если отсутствует): "; cin >> currentStudent.rank;
 	system("CLS");
@@ -219,7 +226,7 @@ void inputStudent(Student& currentStudent) {
 	system("CLS");
 	cout << "Введите место в группе студента: "; cin >> currentStudent.groupPosition;
 	system("CLS");
-	cout << "Выберите форму обучения: "; cin >> currentStudent.studyForm;
+	formMenu(currentStudent.studyForm);
 	system("CLS");
 	markMenu("Введите оценку за экзамен по Вв в ИТ: ", currentStudent.itExamMark);
 	system("CLS");
@@ -307,6 +314,174 @@ void markMenu(string message, int& mark)
 		break;
 	case 3:
 		mark = 2;
+		break;
+	}
+}
+
+int sexAns()
+{
+	int choice = 0;
+	int options = 2;
+	int ch;
+	while (true) {
+		system("cls");
+		choice = (choice + options) % options;
+		cout << "Вверх/w и " << "вниз/s для перемещения" << endl;
+		cout << "Enter для выбора" << endl << endl;
+		cout << "Выберите пол студента:" << endl;
+
+		if (choice == 0) cout << "-> Мужской" << endl;
+		else  cout << "   Мужской" << endl;
+		
+		if (choice == 1) cout << "-> Женский" << endl;
+		else  cout << "   Женский" << endl;
+
+		ch = _getch();
+		if (ch == 224)
+		{
+			ch = _getch();
+			if (ch == 80) choice++;
+			if (ch == 72) choice--;
+		}
+		if (ch == 119) choice--;
+		if (ch == 115) choice++;
+		if (ch == 13) break;
+	}
+	system("cls");
+	return choice;
+}
+
+void sexMenu(bool& sex)
+{
+	int answer;
+	answer = sexAns();
+	switch (answer)
+	{
+	case 0:
+		sex = 0;
+		break;
+	case 1:
+		sex = 1;
+		break;
+	}
+}
+
+int wearAns()
+{
+	int choice = 0;
+	int options = 5;
+	int ch;
+	while (true) {
+		system("cls");
+		choice = (choice + options) % options;
+		cout << "Вверх/w и " << "вниз/s для перемещения" << endl;
+		cout << "Enter для выбора" << endl << endl;
+		cout << "Выберите размер одежды:" << endl;
+
+		if (choice == 0) cout << "-> XS" << endl;
+		else  cout << "   XS" << endl;
+
+		if (choice == 1) cout << "-> S" << endl;
+		else  cout << "   S" << endl;
+
+		if (choice == 2) cout << "-> M" << endl;
+		else  cout << "   M" << endl;
+
+		if (choice == 3) cout << "-> L" << endl;
+		else  cout << "   L" << endl;
+
+		if (choice == 4) cout << "-> XL" << endl;
+		else  cout << "   XL" << endl;
+
+		ch = _getch();
+		if (ch == 224)
+		{
+			ch = _getch();
+			if (ch == 80) choice++;
+			if (ch == 72) choice--;
+		}
+		if (ch == 119) choice--;
+		if (ch == 115) choice++;
+		if (ch == 13) break;
+	}
+	system("cls");
+	return choice;
+}
+
+void wearMenu(string& size)
+{
+	int answer;
+	answer = wearAns();
+	switch (answer)
+	{
+	case 0:
+		size = "XS";
+		break;
+	case 1:
+		size = "S";
+		break;
+	case 2:
+		size = "M";
+		break;
+	case 3:
+		size = "L";
+		break;
+	case 4:
+		size = "XL";
+		break;
+	}
+}
+
+int formAns()
+{
+	int choice = 0;
+	int options = 5;
+	int ch;
+	while (true) {
+		system("cls");
+		choice = (choice + options) % options;
+		cout << "Вверх/w и " << "вниз/s для перемещения" << endl;
+		cout << "Enter для выбора" << endl << endl;
+		cout << "Выберите форму обучения:" << endl;
+
+		if (choice == 0) cout << "-> очная" << endl;
+		else  cout << "   очная" << endl;
+
+		if (choice == 1) cout << "-> очно-заочная" << endl;
+		else  cout << "   очно-заочная" << endl;
+
+		if (choice == 2) cout << "-> заочная" << endl;
+		else  cout << "   заочная" << endl;
+
+		ch = _getch();
+		if (ch == 224)
+		{
+			ch = _getch();
+			if (ch == 80) choice++;
+			if (ch == 72) choice--;
+		}
+		if (ch == 119) choice--;
+		if (ch == 115) choice++;
+		if (ch == 13) break;
+	}
+	system("cls");
+	return choice;
+}
+
+void formMenu(string& size)
+{
+	int answer;
+	answer = formAns();
+	switch (answer)
+	{
+	case 0:
+		size = "очная";
+		break;
+	case 1:
+		size = "очно-заочная";
+		break;
+	case 2:
+		size = "заочная";
 		break;
 	}
 }
@@ -721,7 +896,7 @@ int editMenu(int i)
 			return 0;
 		}
 		answer = editMenuAns(i);
-		if (answer != 16)
+		if (answer >= 0 && answer <= 7 && answer != 1 && answer != 3)
 		{
 			value = getValue();
 			currentStudent.creationTime = getCurrentDate();
@@ -732,13 +907,13 @@ int editMenu(int i)
 			currentStudent.name = value;
 			break;
 		case 1:
-			currentStudent.sex = value;
+			sexMenu(currentStudent.sex);
 			break;
 		case 2:
 			currentStudent.age = stoi(value);
 			break;
 		case 3:
-			currentStudent.wearSize = value;
+			wearMenu(currentStudent.wearSize);
 			break;
 		case 4:
 			currentStudent.rank = stoi(value);
@@ -753,40 +928,34 @@ int editMenu(int i)
 			currentStudent.groupPosition = stoi(value);
 			break;
 		case 8:
-			currentStudent.studyForm = value;
+			formMenu(currentStudent.studyForm);
 			break;
 		case 9:
-			currentStudent.itExamMark = stoi(value);
-			countMarkSum(currentStudent);
+			markMenu("Введите оценку за экзамен по Вв в ИТ: ", currentStudent.itExamMark);
 			break;
 		case 10:
-			currentStudent.aigExamMark = stoi(value);
-			countMarkSum(currentStudent);
+			markMenu("Введите оценку за экзамен по АиГу: ", currentStudent.aigExamMark);
 			break;
 		case 11:
-			currentStudent.mathanExamMark = stoi(value);
-			countMarkSum(currentStudent);
+			markMenu("Введите оценку за экзамен по МатАнанализу: ", currentStudent.mathanExamMark);
 			break;
 		case 12:
-			currentStudent.historyPassMark = stoi(value);
-			countMarkSum(currentStudent);
+			markMenu("Введите оценку за дифзачет по истории: ", currentStudent.historyPassMark);
 			break;
 		case 13:
-			currentStudent.engPassMark = stoi(value);
-			countMarkSum(currentStudent);
+			markMenu("Введите оценку за дифзачет по английскому: ", currentStudent.engPassMark);
 			break;
 		case 14:
-			currentStudent.codePassMark = stoi(value);
-			countMarkSum(currentStudent);
+			markMenu("Введите оценку за дифзачет по программированию: ", currentStudent.codePassMark);
 			break;
 		case 15:
-			currentStudent.codeCourseMark = stoi(value);
-			countMarkSum(currentStudent);
+			markMenu("Введите оценку за курсовую по программированию: ", currentStudent.codeCourseMark);
 			break;
 		case 16:
 			return 0;
 			break;
 		}
+		if (answer >= 9 && answer <= 15) countMarkSum(currentStudent); // Если оценку изменили, то пересчитать сумму оценок
 	} while (true);
 }
 
@@ -982,8 +1151,8 @@ void outputBySex()
 
 	for (int i = 0; i < studentQuantity; i++)
 	{
-		if (database[i].sex == "м") male++;
-		else female++;
+		if (database[i].sex) female++;
+		else male++;
 	}
 
 	cout << "В базе данных " << male << " мужчин и " << female << " женщин" << endl;
@@ -1294,7 +1463,7 @@ void outputFemaleTeam()
 {
 	for (int i = 0; i < studentQuantity; i++)
 	{
-		if (database[i].rank > 0 && database[i].sex == "ж") {
+		if (database[i].rank > 0 && database[i].sex) {
 			outputAllFields(database[i]);
 		}
 	}
@@ -1322,7 +1491,7 @@ void outputMaleS()
 {
 	for (int i = 0; i < studentQuantity; i++)
 	{
-		if (database[i].sex == "м" && (database[i].wearSize == "m" || database[i].wearSize == "l" || database[i].wearSize == "xl")) {
+		if (!database[i].sex && (database[i].wearSize == "M" || database[i].wearSize == "L" || database[i].wearSize == "XL")) {
 			outputAllFields(database[i]);
 		}
 	}
