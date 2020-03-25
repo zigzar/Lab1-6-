@@ -757,36 +757,31 @@ int editMenu(int i)
 			break;
 		case 9:
 			markMenu("Введите оценку за экзамен по Вв в ИТ: ", currentStudent.itExamMark);
-			countMarkSum(currentStudent);
 			break;
 		case 10:
 			markMenu("Введите оценку за экзамен по АиГу: ", currentStudent.aigExamMark);
-			countMarkSum(currentStudent);
 			break;
 		case 11:
 			markMenu("Введите оценку за экзамен по МатАнанализу: ", currentStudent.mathanExamMark);
-			countMarkSum(currentStudent);
 			break;
 		case 12:
 			markMenu("Введите оценку за дифзачет по истории: ", currentStudent.historyPassMark);
-			countMarkSum(currentStudent);
 			break;
 		case 13:
 			markMenu("Введите оценку за дифзачет по английскому: ", currentStudent.engPassMark);
-			countMarkSum(currentStudent);
 			break;
 		case 14:
 			markMenu("Введите оценку за дифзачет по программированию: ", currentStudent.codePassMark);
-			countMarkSum(currentStudent);
 			break;
 		case 15:
 			markMenu("Введите оценку за курсовую по программированию: ", currentStudent.codeCourseMark);
-			countMarkSum(currentStudent);
 			break;
 		case 16:
 			return 0;
 			break;
 		}
+		if (answer >= 9 && answer <= 15) countMarkSum(currentStudent); // Если оценку изменили, то пересчитать сумму оценок
+
 	} while (true);
 }
 
