@@ -45,6 +45,8 @@ string getCurrentDate();
 void outputAllFields(Student& currentStudent);
 bool has2(Student& currentStudent);
 int countMarkSum(Student& currentStudent);
+void markMenu(string message, int& mark);
+int markAns(string message);
 
 void newFile();
 void transaction();
@@ -54,7 +56,6 @@ void menu();
 void menuLocked();
 int ans();
 int ansLocked();
-
 
 int editMenu(int i);
 void chooseStudent();
@@ -220,19 +221,19 @@ void inputStudent(Student& currentStudent) {
 	system("CLS");
 	cout << "Выберите форму обучения: "; cin >> currentStudent.studyForm;
 	system("CLS");
-	cout << "Введите оценку за экзамен по Вв в ИТ: "; cin >> currentStudent.itExamMark;
+	markMenu("Введите оценку за экзамен по Вв в ИТ: ", currentStudent.itExamMark);
 	system("CLS");
-	cout << "Введите оценку за экзамен по АиГу: "; cin >> currentStudent.aigExamMark;
+	markMenu("Введите оценку за экзамен по АиГу: ", currentStudent.aigExamMark);
 	system("CLS");
-	cout << "Введите оценку за экзамен по МатАнанализу: "; cin >> currentStudent.mathanExamMark;
+	markMenu("Введите оценку за экзамен по МатАнанализу: ", currentStudent.mathanExamMark);
 	system("CLS");
-	cout << "Введите оценку за дифзачет по истории: "; cin >> currentStudent.historyPassMark;
+	markMenu("Введите оценку за дифзачет по истории: ", currentStudent.historyPassMark);
 	system("CLS");
-	cout << "Введите оценку за дифзачет по английскому: "; cin >> currentStudent.engPassMark;
+	markMenu("Введите оценку за дифзачет по английскому: ", currentStudent.engPassMark);
 	system("CLS");
-	cout << "Введите оценку за дифзачет по программированию: "; cin >> currentStudent.codePassMark;
+	markMenu("Введите оценку за дифзачет по программированию: ", currentStudent.codePassMark);
 	system("CLS");
-	cout << "Введите оценку за курсовую по программированию: "; cin >> currentStudent.codeCourseMark;
+	markMenu("Введите оценку за курсовую по программированию: ", currentStudent.codeCourseMark);
 	currentStudent.markSum = countMarkSum(currentStudent);
 	system("CLS");
 }
@@ -287,6 +288,66 @@ int countMarkSum(Student& currentStudent)
 	sum += currentStudent.codePassMark;
 	sum += currentStudent.codeCourseMark;
 	return sum;
+}
+
+void markMenu(string message, int& mark)
+{
+	int answer;
+	answer = markAns(message);
+	switch (answer)
+	{
+	case 0:
+		mark = 5;
+		break;
+	case 1:
+		mark = 4;
+		break;
+	case 2:
+		mark = 3;
+		break;
+	case 3:
+		mark = 2;
+		break;
+	}
+}
+
+int markAns(string message)
+{
+	int choice = 0;
+	int options = 4;
+	int ch;
+	while (true) {
+		system("cls");
+		choice = (choice + options) % options;
+		cout << "Вверх/w и " << "вниз/s для перемещения" << endl;
+		cout << "Enter для выбора" << endl << endl;
+		cout << message << endl;
+
+		if (choice == 0) cout << "-> Отл" << endl;
+		else  cout << "   Отл" << endl;
+
+		if (choice == 1) cout << "-> Хор" << endl;
+		else  cout << "   Хор" << endl;
+
+		if (choice == 2) cout << "-> Уд" << endl;
+		else  cout << "   Уд" << endl;
+
+		if (choice == 3) cout << "-> Неуд" << endl;
+		else  cout << "   Неуд" << endl;
+
+		ch = _getch();
+		if (ch == 224)
+		{
+			ch = _getch();
+			if (ch == 80) choice++;
+			if (ch == 72) choice--;
+		}
+		if (ch == 119) choice--;
+		if (ch == 115) choice++;
+		if (ch == 13) break;
+	}
+	system("cls");
+	return choice;
 }
 
 void newFile() { // Создать новый файл базы данных с базовой разметкой и очистить файл структур
