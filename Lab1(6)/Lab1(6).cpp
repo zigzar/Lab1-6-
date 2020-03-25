@@ -266,6 +266,7 @@ void outputAllFields(Student& currentStudent) { // Вывод информаци
 	cout << "Оценка за дифзачет по английскому: " << formatMark(currentStudent.engPassMark) << endl;
 	cout << "Оценка за дифзачет по программированию: " << formatMark(currentStudent.codePassMark) << endl;
 	cout << "Оценка за курсовую по программированию: " << formatMark(currentStudent.codeCourseMark) << endl;
+	cout << "_______________________________________________" << endl << endl;
 }
 
 string formatSex(bool& sex)
