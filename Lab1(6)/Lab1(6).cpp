@@ -10,106 +10,117 @@ using namespace std;
 
 HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
-string outputFile = "students.txt";
-string databaseFile = "db.txt"; // Технический файл с неотформатированными данными
+string outputFile = "students.txt"; // Файл вывода
+string databaseFile = "db.txt"; 	// Технический файл с неотформатированными данными
 
 struct Student {
-	string creationTime;
-	int id;
-	string name;
-	bool sex;
-	int age;
-	string wearSize;
-	int rank;
-	int courseNumber;
-	int groupNumber;
-	int groupPosition;
-	string studyForm;
-	int itExamMark;
-	int aigExamMark;
-	int mathanExamMark;
-	int historyPassMark;
-	int engPassMark;
-	int codePassMark;
-	int codeCourseMark;
-	int markSum;
+	string creationTime;			// Время создания/изменения
+	int id;							// ID студента в БД
+	string name;					// ФИО студента
+	bool sex;						// Пол
+	int age;						// Возраст
+	string wearSize;				// Размер одежды
+	int rank;						// Разряд по волейболу
+	int courseNumber;				// Номер курса
+	int groupNumber;				// Номер группы
+	int groupPosition;				// Место в группе
+	string studyForm;				// Форма обучения
+	int itExamMark;					// Оценка по Вв в ИТ (экз.)
+	int aigExamMark;				// Оценка по АиГу (экз.)
+	int mathanExamMark;				// Оценка по МатАну (экз.)
+	int historyPassMark;			// Оценка по истории (диф. з.)
+	int engPassMark;				// Оценка по Ин. Яз. (диф. з.)
+	int codePassMark;				// Оценка по прогр. (диф. з.)
+	int codeCourseMark;				// Оценка по прогр. (курсовая)
+	int markSum;					// Сумма баллов по всем предметам
 };	 
 
-Student* database;
-int studentQuantity;
+Student* database;					// Указатель на массив студентов
+int studentQuantity;				// Количество студентов в БД
 
-void newStudent();
-void pushBack(const Student& value);
-void inputStudent(Student &currentStudent);
-string getCurrentDate();
-void outputAllFields(Student& currentStudent);
-string formatSex(bool& sex);
-string formatMark(int& mark);
-bool has2(Student& currentStudent);
-int countMarkSum(Student& currentStudent);
-void markMenu(string message, int& mark);
-int markAns(string message);
-void sexMenu(bool& sex);
-int sexAns();
-void wearMenu(string& size);
-int wearAns();
-void formMenu(string& size);
-int formAns();
+// ДОБАВЛЕНИЕ СТУДЕНТА //
+void newStudent();								// Создать студента
+void pushBack(const Student& value);			// Увеличить массив студентов и добавить в него нового студента
+void inputStudent(Student &currentStudent);		// Ввести информацию о студенте
+string getCurrentDate();						// Получить текущие дату и время
+bool has2(Student& currentStudent);				// Проверить на наличие неуд оценок
+int countMarkSum(Student& currentStudent);		// Просуммировать оценки студента
 
-void newFile();
-void transaction();
-void loadDatabase();
+// ОПЕРАЦИИ С ФАЙЛАМИ //
+void newFile();									// Создать новый файл базы данных с базовой разметкой и очистить файл структур
+void transaction();								// Произвести транзикцию БД в технический файл и файл вывода
+void loadDatabase();							// Загрузить БД из технического файла
 
-void menu();
-void menuLocked();
-int ans();
-int ansLocked();
+// МЕНЮ. ГРАФИЧЕСКАЯ ЧАСТЬ //
+int ans();										// Выбрать пункт в главном меню
+int ansLocked();								// Выбрать пункт в главном меню при пустой БД
+int markAns(string message);					// Выбрать пункт в меню выбора оценки
+int sexAns();									// Выбрать пункт в меню выбора пола
+int wearAns();									// Выбрать пункт в меню выбора размера одежды
+int formAns();									// Выбрать пункт в меню выбора формы обучения
+int editMenuAns(int i);							// Выбрать пункт в меню редактирования студента
+int notGrantedAns();							// Выбрать пункт в меню вывода студентов без стипендии
+int outputByDayAns();							// Выбрать пункт в меню вывода студентов по дате
 
-int editMenu(int i);
-void chooseStudent();
-void editStudent(int id);
-int getIndex(int id);
-int editMenuAns(int i);
-string getValue();
-void deleteStudent(int index);
+// МЕНЮ. ЛОГИЧЕСКАЯ ЧАСТЬ //
+void menu();									// Главное меню
+void menuLocked();								// Главное меню при пустой БД
+void markMenu(string message, int& mark);		// Меню выбора оценки
+void sexMenu(bool& sex);						// Меню выбора пола
+void wearMenu(string& size);					// Меню выбора размера одежды
+void formMenu(string& size);					// Меню выбора формы обучения
+int editMenu(int i);							// Меню редактирования студента
+int notGrantedMenu();							// Меню вывода студентов без стипендии
+int outputByDayMenu(string date);				// Меню вывода студентов по дате
 
-int getGroupNumber();
-void outputByGroup();
+// РЕДАКТИРОВАНИЕ СТУДЕНТА //
+void chooseStudent();							// Выбор студента для редактирования
+void editStudent(int id);						// Отредактировать студента
+int getIndex(int id);							// Получить индекс студента в массиве БД по его ID
+string getValue();								// Получает значение для редактируемого поля структуры
+void deleteStudent(int index);					// Удалить студента из БД
 
-bool comp(Student a, Student b); // Компаратор для функции sort()
-void outputTop();
+// ВЫВОД ОБЩИЙ //
+void outputAllFields(Student& currentStudent);	// Вывести все поля студента
+string formatSex(bool& sex);					// Отформатировать пол
+string formatMark(int& mark);					// Отформатировать оценку
 
-void outputBySex();
+// ВЫВОД ОТФИЛЬТРОВАННЫЙ //
+int getGroupNumber();							// Получить номер группы
+void outputByGroup();							// Вывести по номеру группы
 
-void outputWithGrant();
-bool isGranted(Student& currentStudent);
+bool comp(Student a, Student b);				// Компаратор для функции sort();
+void outputTop();								// Вывести топ студентов
 
-int notGrantedMenu();
-int notGrantedAns();
-bool is4(Student& currentStudent);
-bool is4and5(Student& currentStudent);
-bool is5(Student& currentStudent);
-void notGranted_4();
-void notGranted_4and5();
-void notGranted_5();
+void outputBySex();								// Вывести количество мужчин и женщин в БД
 
-void outputByDay();
-int outputByDayMenu(string date);
-int outputByDayAns();
-void outputAnyTime(string date);
-void outputAM(string date);
-void outputPM(string date);
+void outputWithGrant();							// Вывести студентов, получающих стипендию
+bool isGranted(Student& currentStudent);		// Проверка на стипендию
 
-void outputByPosition();
 
-void outputRanked();
+bool is4(Student& currentStudent);				// Проверка только на хор
+bool is4and5(Student& currentStudent);			// Проверка на хор и отл
+bool is5(Student& currentStudent);				// Проверка только на отл
+void notGranted_4();							// Проверка только на хор при отсутствии стипендии
+void notGranted_4and5();						// Проверка на хор и отл при отсутствии стипендии
+void notGranted_5();							// Проверка только на отл при отсутствии стипендии
 
-void outputFemaleTeam();
+void outputByDay();								// Вывести студентов по дате
+void outputAnyTime(string date);				// В любое время
+void outputAM(string date);						// До полудня
+void outputPM(string date);						// После полудня
 
-int getCourseNumber();
-void outputByCourse();
+void outputByPosition();						// Вывести по месту в группе
 
-void outputMaleS();
+void outputRanked();							// Вывести студентов с разрядом по волейболу
+
+void outputFemaleTeam();						// Вывести студенток женской сборной
+
+int getCourseNumber();							// Получить номер курса
+void outputByCourse();							// Вывести студентов полученного курса
+
+void outputMaleS();								// Вывести студентов мужского пола, чей размер одежды >S
+
 
 int main()	
 {
@@ -182,7 +193,7 @@ void loadDatabase() {
 	}
 }
 
-void pushBack(const Student& value) { // Увеличить массив студентов и добавить в него нового студента
+void pushBack(const Student& value) {
 	Student* newArray = new Student[studentQuantity+1];
 
 	for (int i = 0; i < studentQuantity; i++)
@@ -560,7 +571,7 @@ int markAns(string message)
 	return choice;
 }
 
-void newFile() { // Создать новый файл базы данных с базовой разметкой и очистить файл структур
+void newFile() {
 	ofstream fout;
 	fout.open(outputFile);
 	fout << "Количество студентов в базе данных:\n" << studentQuantity << endl;
@@ -584,7 +595,6 @@ void newStudent() {
 
 	if (!has2(newStudent)) {
 		pushBack(newStudent);
-		outputAllFields(database[studentQuantity - 1]);
 		transaction();
 	}
 	else 
@@ -1105,7 +1115,7 @@ int editMenuAns(int i)
 	return choice;
 }
 
-string getValue() // Получает значение для редактируемого поля структуры
+string getValue()
 {
 	string value;
 	system("cls");
